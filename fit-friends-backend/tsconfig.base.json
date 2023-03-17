@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@fit-friends-backend/core": ["libs/core/src/index.ts"],
       "@fit-friends-backend/shared-types": ["libs/shared-types/src/index.ts"]
     }
   },
