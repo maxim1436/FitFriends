@@ -17,3 +17,4 @@ export function getMongoDbConfig(): MongooseModuleAsyncOptions {
     inject: [ConfigService]
   }
 }
+

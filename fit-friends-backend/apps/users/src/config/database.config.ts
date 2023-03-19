@@ -8,3 +8,4 @@ export default registerAs('database', () => ({
   password: process.env.MONGO_PASSWORD,
   authBase: process.env.MONGO_AUTH_BASE,
 }));
+

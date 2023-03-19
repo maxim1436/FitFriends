@@ -9,6 +9,7 @@ export class LoginUserDto {
   )
   public email: string;
 
+
   @IsString()
   public password: string;
 }

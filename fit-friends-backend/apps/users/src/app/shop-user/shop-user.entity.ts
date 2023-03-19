@@ -33,6 +33,7 @@ export class ShopUserEntity implements User {
     return {...this};
   }
 
+
   public fillEntity(shopUser: User) {
     this._id = shopUser._id;
     this.email = shopUser.email;

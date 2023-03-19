@@ -5,3 +5,4 @@ export interface CRUDRepository<E,I, R> {
   update(id: I, item: E): Promise<R>;
   destroy(id: I): Promise<void>;
 }
+

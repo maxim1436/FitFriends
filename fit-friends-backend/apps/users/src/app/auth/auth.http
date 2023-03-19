@@ -16,7 +16,7 @@ Content-Type: application/json
     "type": ["бокс"],
     "time": "30-50 мин",
     "caloriesToLose": 1000,
-    "caloriesLosePerDay": 1000,
+    "caloriesLosePerDay": 2000,
     "readyToTrain": true
   },
   "coachSurvey": {}

@@ -2,6 +2,7 @@ import * as Joi from 'joi';
 
 const DEFAULT_MONGO_DB_PORT = 27017;
 
+
 export default Joi.object({
   MONGO_DB: Joi
     .string()

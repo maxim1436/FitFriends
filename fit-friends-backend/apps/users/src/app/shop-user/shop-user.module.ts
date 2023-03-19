@@ -12,4 +12,5 @@ import {ShopUserRepository} from './shop-user.repository';
   exports: [ShopUserRepository],
 })
 
+
 export class ShopUserModule {}
