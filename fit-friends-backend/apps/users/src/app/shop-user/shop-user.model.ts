@@ -13,7 +13,6 @@ export class ShopUserModel extends Document implements User {
   })
   public email: string;
 
-
   @Prop({
     required: true,
   })

@@ -10,4 +10,3 @@ export class LoggedUserRdo {
   @Expose()
   public accessToken: string;
 }
-

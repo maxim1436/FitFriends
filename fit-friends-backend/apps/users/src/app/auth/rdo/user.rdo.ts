@@ -14,7 +14,6 @@ export class UserRdo {
   @Expose()
   public avatar: string;
 
-
   @Expose()
   public userRole: string;
 

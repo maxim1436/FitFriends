@@ -10,7 +10,6 @@ export class CreateUserDto {
   )
   public email: string;
 
-
   @IsString()
   public firstname: string;
 

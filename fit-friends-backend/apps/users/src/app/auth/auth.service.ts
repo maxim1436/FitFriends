@@ -25,7 +25,6 @@ export class AuthService {
       location, gender, coachSurvey, userSurvey,  passwordHash: ''
     };
 
-
     const existUser = await this.shopUserRepository
       .findByEmail(email);
 

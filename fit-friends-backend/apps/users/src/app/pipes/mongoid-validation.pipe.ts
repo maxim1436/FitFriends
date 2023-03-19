@@ -10,7 +10,6 @@ export class MongoidValidationPipe implements PipeTransform {
       throw new Error('This pipe must used only with params!')
     }
 
-
     if (!Types.ObjectId.isValid(value)) {
       throw new BadRequestException(BAD_MONGOID_ERROR);
     }

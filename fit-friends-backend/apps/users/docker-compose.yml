@@ -16,7 +16,7 @@ services:
       test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/fit-friends-backend-users --quiet
       interval: 10s
       timeout: 10s
-      retries: 6
+      retries: 5
 
   mongodb-express:
     image: mongo-express

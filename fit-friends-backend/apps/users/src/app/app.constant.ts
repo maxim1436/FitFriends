@@ -9,4 +9,3 @@ export enum EnvValidationMessage {
   DBPasswordRequired = 'MongoDB password is required',
   DBBaseAuthRequired = 'MongoDB authentication base is required',
 }
-

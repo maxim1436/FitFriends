@@ -5,7 +5,6 @@ import {EnvValidationMessage} from './app.constant';
 const MIN_PORT = 0;
 const MAX_PORT = 65535;
 
-
 class EnvironmentsConfig {
   @IsString({
     message: EnvValidationMessage.DBNameRequired

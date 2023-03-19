@@ -9,7 +9,6 @@ import { getJwtConfig } from '../../config/jwt.config';
 import { JwtStrategy } from './strategies/jwt.strategy';
 
 @Module({
-
   imports: [
     ShopUserModule,
     PassportModule,

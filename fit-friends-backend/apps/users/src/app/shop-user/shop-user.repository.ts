@@ -17,7 +17,6 @@ export class ShopUserRepository implements CRUDRepository<ShopUserEntity, string
     return newShopUser.save();
   }
 
-
   public async destroy(id: string): Promise<void> {
     this.shopUserModel.deleteOne({id});
   }

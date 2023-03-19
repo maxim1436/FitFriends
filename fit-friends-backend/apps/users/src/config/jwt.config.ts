@@ -11,4 +11,3 @@ export async function getJwtConfig(configService: ConfigService): Promise<JwtMod
     signOptions: { expiresIn: '60s', algorithm: 'HS256' }
   }
 }
-
