@@ -1,8 +1,9 @@
-import { Body, Controller, Post, Get, Param, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param, UseGuards, Patch } from '@nestjs/common';
 import { fillObject } from '@fit-friends-backend/core';
+import { UserRdo } from './rdo/user.rdo';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UserRdo } from './rdo/user.rdo';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
@@ -32,4 +33,9 @@ export class AuthController {
     return fillObject(UserRdo, existUser);
   }
 
+  @Patch(':id')
+  async update(@Param('id', MongoidValidationPipe) id: string, @Body() dto: UpdateUserDto) {
+    const updatedUser = await this.authService.updateUser(id, dto);
+    return fillObject(UserRdo, updatedUser);
+  }
 }

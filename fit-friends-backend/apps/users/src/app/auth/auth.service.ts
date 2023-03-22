@@ -1,12 +1,15 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ShopUserRepository } from '../shop-user/shop-user.repository';
+import { ShopUserEntity } from '../shop-user/shop-user.entity';
 import { UserRole, User } from '@fit-friends-backend/shared-types';
 import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthUserMessage } from './auth.constant';
-import { ShopUserEntity } from '../shop-user/shop-user.entity';
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import dayjs from 'dayjs';
+import { fillObject } from '@fit-friends-backend/core';
+import { UserRdo } from './rdo/user.rdo';
 
 @Injectable()
 export class AuthService {
@@ -59,6 +62,19 @@ export class AuthService {
 
   async getUser(id: string) {
     return this.shopUserRepository.findById(id);
+  }
+
+  async updateUser(id: string, dto: UpdateUserDto) {
+
+    const existUser = await this.shopUserRepository.findById(id);
+
+    if (!existUser) {
+      throw new UnauthorizedException(AuthUserMessage.AUTH_USER_NOT_FOUND);
+    }
+
+    const shopUserEntity = Object.assign(new ShopUserEntity(existUser), dto);
+
+    return this.shopUserRepository.update(id, shopUserEntity);
   }
 
   async loginUser(user: User) {

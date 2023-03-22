@@ -34,6 +34,7 @@ export class ShopUserRepository implements CRUDRepository<ShopUserEntity, string
   }
 
   public async update(id: string, item: ShopUserEntity): Promise<User> {
+    // console.log(item);
     return this.shopUserModel
       .findByIdAndUpdate(id, item.toObject(), {new: true})
       .exec();
