@@ -38,4 +38,12 @@ export class AuthController {
     const updatedUser = await this.authService.updateUser(id, dto);
     return fillObject(UserRdo, updatedUser);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':id/users/:count')
+  async showUsers(@Param('id', MongoidValidationPipe) id: string, @Param('count') count?: number) {
+    // console.log(count);
+    const existsUsers = await this.authService.getUsers(count);
+    return fillObject(UserRdo, existsUsers);
+  }
 }

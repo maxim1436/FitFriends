@@ -77,6 +77,10 @@ export class AuthService {
     return this.shopUserRepository.update(id, shopUserEntity);
   }
 
+  async getUsers(count?: number) {
+    return this.shopUserRepository.findByDefault(count);
+  }
+
   async loginUser(user: User) {
     const payload = {
       sub: user._id,

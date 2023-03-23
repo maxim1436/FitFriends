@@ -5,6 +5,7 @@ import {InjectModel} from '@nestjs/mongoose';
 import {ShopUserModel} from './shop-user.model';
 import {Model} from 'mongoose';
 import {Injectable} from '@nestjs/common';
+import { DEFAULT_USER_COUNT } from './shop-user.constant';
 
 @Injectable()
 export class ShopUserRepository implements CRUDRepository<ShopUserEntity, string, User> {
@@ -34,9 +35,22 @@ export class ShopUserRepository implements CRUDRepository<ShopUserEntity, string
   }
 
   public async update(id: string, item: ShopUserEntity): Promise<User> {
-    // console.log(item);
     return this.shopUserModel
       .findByIdAndUpdate(id, item.toObject(), {new: true})
       .exec();
+  }
+
+  public async findByDefault (count?: number): Promise<User[]> {
+
+    if (count >= DEFAULT_USER_COUNT) {
+      const limit = DEFAULT_USER_COUNT;
+      return this.shopUserModel
+      .find({}, {}, {limit})
+      .exec();
+    } else {
+      return this.shopUserModel
+      .find({}, {}, {count})
+      .exec();
+    }
   }
 }
