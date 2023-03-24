@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
 import { ShopUserModule } from './shop-user/shop-user.module';
+import { ShopTrainingModule } from './shop-training/shop-training.module';
+import { CRUDTrainingModule } from './shop-training/crud-training.module';
 import { ConfigModule } from '@nestjs/config';
 import { ENV_FILE_PATH } from './app.constant';
 import databaseConfig from '../config/database.config';
@@ -22,7 +24,9 @@ import { jwtOptions } from '../config/jwt.config';
       getMongoDbConfig()
     ),
     AuthModule,
-    ShopUserModule
+    ShopUserModule,
+    ShopTrainingModule,
+    CRUDTrainingModule
   ],
   controllers: [],
   providers: [],

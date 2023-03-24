@@ -1,0 +1,21 @@
+# Create a new training
+POST http://localhost:3333/api/training/6414c02a12e2d40d5489a872/create HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDE0YzAyYTEyZTJkNDBkNTQ4OWE4NzIiLCJlbWFpbCI6InVzZXJAbWFpbC5ydSIsInVzZXJSb2xlIjoidXNlciIsImZpcnN0bmFtZSI6Ik1heDMzMyIsImlhdCI6MTY3OTY4NjU2OSwiZXhwIjoxNjc5Njg2NjI5fQ.P06L9W0oxmYIIAbZsdMdp-McyUdtHQFqFxI1BRQLDBw
+Content-Type: application/json
+
+{
+  "title": "Тренировка",
+  "avatar": "12313",
+  "level": "новичок",
+  "type": "бег",
+  "time": "10-30 мин",
+  "price": 100,
+  "calories": 2000,
+  "description": "Приходите, не пожалеете!",
+  "gender": "для всех",
+  "videoLink": "12312311",
+  "rating": 3,
+  "special": true
+}
+
+###

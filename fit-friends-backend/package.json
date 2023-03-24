@@ -5,6 +5,7 @@
   "scripts": {},
   "private": true,
   "dependencies": {
+    "@typegoose/typegoose": "^9.8.1",
     "@nestjs/common": "^9.0.0",
     "@nestjs/jwt": "9.0.0",
     "@nestjs/passport": "9.0.0",

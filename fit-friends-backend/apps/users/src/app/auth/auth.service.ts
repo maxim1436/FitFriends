@@ -8,8 +8,6 @@ import { AuthUserMessage } from './auth.constant';
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import dayjs from 'dayjs';
-import { fillObject } from '@fit-friends-backend/core';
-import { UserRdo } from './rdo/user.rdo';
 
 @Injectable()
 export class AuthService {

@@ -1,3 +1,4 @@
+import { User } from "./user.interface";
 
 export interface Training {
   _id?: string;
@@ -12,6 +13,6 @@ export interface Training {
   gender: string;
   videoLink: string;
   rating: number;
-  coachId: string;
+  coach?: string;
   special: boolean;
 }
