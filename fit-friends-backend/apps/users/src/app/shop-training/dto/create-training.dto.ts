@@ -2,42 +2,39 @@ import { IsString, IsNumber, IsBoolean } from 'class-validator';
 
 export class CreateTrainingDto {
 
-  // @IsString()
+  @IsString()
   public title: string;
 
-  // @IsString()
+  @IsString()
   public avatar: string;
 
-  // @IsString()
+  @IsString()
   public level: string;
 
-  // @IsString()
+  @IsString()
   public type: string;
 
-  // @IsString()
+  @IsString()
   public time: string;
 
-  // @IsNumber()
+  @IsNumber()
   public price: number;
 
-  // @IsNumber()
+  @IsNumber()
   public calories: number;
 
-  // @IsString()
+  @IsString()
   public description: string;
 
-  // @IsString()
+  @IsString()
   public gender: string;
 
-  // @IsString()
+  @IsString()
   public videoLink: string;
 
-  // @IsNumber()
+  @IsNumber()
   public rating: number;
 
-  // @IsString()
-  // public coachId: string;
-
-  // @IsBoolean()
+  @IsBoolean()
   public special: boolean;
 }
