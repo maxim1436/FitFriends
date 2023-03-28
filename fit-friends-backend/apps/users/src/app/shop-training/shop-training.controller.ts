@@ -26,4 +26,12 @@ export class ShopTrainingController {
     const updatedTraining = await this.ShopTrainingService.update(trainingId, dto);
     return fillObject(TrainingRdo, updatedTraining);
   }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':id/:trainingId')
+  async getTraining(@Param('trainingId', MongoidValidationPipe) trainingId: string) {
+    const existTraining = await this.ShopTrainingService.getTraining(trainingId);
+    return fillObject(TrainingRdo, existTraining);
+  }
 }
+

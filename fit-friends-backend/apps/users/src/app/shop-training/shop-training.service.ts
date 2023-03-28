@@ -43,4 +43,8 @@ export class ShopTrainingService {
 
     return this.ShopTrainingRepository.update(id, shopTrainingEntity);
   }
+
+  async getTraining(id: string) {
+    return this.ShopTrainingRepository.findById(id);
+  }
 }
