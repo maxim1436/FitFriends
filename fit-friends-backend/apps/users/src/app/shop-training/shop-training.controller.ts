@@ -6,6 +6,7 @@ import { CreateTrainingDto } from './dto/create-training.dto';
 import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UpdateTrainingDto } from './dto/update-training.dto';
+import { FilterTrainingDto } from './dto/filter-training.dto';
 
 @Controller('training')
 export class ShopTrainingController {
@@ -32,6 +33,17 @@ export class ShopTrainingController {
   async getTraining(@Param('trainingId', MongoidValidationPipe) trainingId: string) {
     const existTraining = await this.ShopTrainingService.getTraining(trainingId);
     return fillObject(TrainingRdo, existTraining);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get(':id/trainings/:count')
+  async showTrainings(
+    @Param('id', MongoidValidationPipe) id: string,
+    @Body() dto: FilterTrainingDto,
+    @Param('count') count?: number
+    ) {
+    const existsTrainings = await this.ShopTrainingService.getSomeTrainings(dto, count);
+    return fillObject(TrainingRdo, existsTrainings);
   }
 }
 

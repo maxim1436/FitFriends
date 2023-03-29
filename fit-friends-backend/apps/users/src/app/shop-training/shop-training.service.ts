@@ -5,6 +5,7 @@ import { Training } from '@fit-friends-backend/shared-types';
 import { CreateTrainingDto } from './dto/create-training.dto';
 import { TrainingMessage } from './shop-training.constant';
 import { UpdateTrainingDto } from './dto/update-training.dto';
+import { FilterTrainingDto } from './dto/filter-training.dto';
 
 @Injectable()
 export class ShopTrainingService {
@@ -46,5 +47,16 @@ export class ShopTrainingService {
 
   async getTraining(id: string) {
     return this.ShopTrainingRepository.findById(id);
+  }
+
+  async getSomeTrainings(dto: FilterTrainingDto, count?: number ) {
+
+    const filterData = Object.assign({
+        lowPrice: 0, maxPrice: 1000000,
+        lowCalories: 1000, maxCalories: 5000, rating: [0, 1, 2, 3, 4, 5],
+        time: ['10-30 мин', '30-50 мин', '50-80 мин', 'больше 80 мин']
+      }, dto)
+
+    return this.ShopTrainingRepository.findByFilters(filterData, count);
   }
 }

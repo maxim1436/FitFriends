@@ -1,6 +1,6 @@
 # Create a new training
-POST http://localhost:3333/api/training/6414c02a12e2d40d5489a872/create HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDE0YzAyYTEyZTJkNDBkNTQ4OWE4NzIiLCJlbWFpbCI6InVzZXJAbWFpbC5ydSIsInVzZXJSb2xlIjoidXNlciIsImZpcnN0bmFtZSI6Ik1heDMzMyIsImlhdCI6MTY3OTY4NjU2OSwiZXhwIjoxNjc5Njg2NjI5fQ.P06L9W0oxmYIIAbZsdMdp-McyUdtHQFqFxI1BRQLDBw
+POST http://localhost:3333/api/training/6422bc52eaee6d038e1d863c/create HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIyYmM1MmVhZWU2ZDAzOGUxZDg2M2MiLCJlbWFpbCI6InVzZXJAbWFpbDMzMy5ydSIsInVzZXJSb2xlIjoidXNlciIsImZpcnN0bmFtZSI6Ik1heDMyMSIsImlhdCI6MTY4MDA5OTEzOSwiZXhwIjoxNjgwMDk5MTk5fQ.fxdyzp7IOSdAAtZvZ39bg1Aefmodn0UHf8fRbIX9LoI
 Content-Type: application/json
 
 {
@@ -8,8 +8,8 @@ Content-Type: application/json
   "avatar": "12313",
   "level": "новичок",
   "type": "бег",
-  "time": "10-30 мин",
-  "price": 100,
+  "time": "больше 80 мин",
+  "price": 400,
   "calories": 2000,
   "description": "Приходите, не пожалеете!",
   "gender": "для всех",
@@ -36,4 +36,14 @@ Content-Type: application/json
 GET http://localhost:3333/api/training/6414c02a12e2d40d5489a872/641dfb1d286fc7ac26a61722 HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDE0YzAyYTEyZTJkNDBkNTQ4OWE4NzIiLCJlbWFpbCI6InVzZXJAbWFpbC5ydSIsInVzZXJSb2xlIjoidXNlciIsImZpcnN0bmFtZSI6Ik1heDMzMyIsImlhdCI6MTY3OTk5NjA0MCwiZXhwIjoxNjc5OTk2MTAwfQ.U-ROnmPKwOGODn6Ow_vQZxlsj1aEWkXr80ZqxhAivtU
 
+###
+#Get trainings with filters
+GET http://localhost:3333/api/training/6422bc52eaee6d038e1d863c/trainings/4 HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDIyYmM1MmVhZWU2ZDAzOGUxZDg2M2MiLCJlbWFpbCI6InVzZXJAbWFpbDMzMy5ydSIsInVzZXJSb2xlIjoidXNlciIsImZpcnN0bmFtZSI6Ik1heDMyMSIsImlhdCI6MTY4MDA5OTIyOSwiZXhwIjoxNjgwMDk5Mjg5fQ.FQzU02sd2u-q2mQXF0k-SmxwVGKenscjJY8Rr4uuSo4
+Content-Type: application/json
+
+{
+  "lowPrice": 200,
+  "time": ["80 мин — 100 мин"]
+}
 ###
