@@ -7,11 +7,15 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { ShopOrderService } from '../shop-order/shop-order.service';
+import { CreateOrderDto } from '../shop-order/dto/create-order.dto';
+import { UserOrderRdo } from '../shop-order/rdo/user-order.rdo';
 
 @Controller('auth')
 export class AuthController {
   constructor(
-    private readonly authService: AuthService
+    private readonly authService: AuthService,
+    // private readonly shopOrderService: ShopOrderService
   ) {}
 
   @Post('register')
@@ -45,4 +49,15 @@ export class AuthController {
     const existsUsers = await this.authService.getUsers(count);
     return fillObject(UserRdo, existsUsers);
   }
+
+  // @UseGuards(JwtAuthGuard)
+  // @Post(':id/order/:serviceId')
+  // async createOrder(
+  //   @Param('id', MongoidValidationPipe) id: string,
+  //   @Body() dto: CreateOrderDto,
+  //   @Param('serviceId', MongoidValidationPipe) serviceId: string
+  //   ) {
+  //   const newOrder = await this.shopOrderService.create(dto, serviceId);
+  //   return fillObject(UserOrderRdo, newOrder);
+  // }
 }

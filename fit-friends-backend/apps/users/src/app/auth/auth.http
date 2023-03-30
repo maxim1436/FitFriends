@@ -3,7 +3,7 @@ POST http://localhost:3333/api/auth/register HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "user@mail333.ru",
+  "email": "user@mail1.ru",
   "firstname": "Max321",
   "avatar": "qwerty",
   "password": "123456",
@@ -34,7 +34,7 @@ POST http://localhost:3333/api/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "user@mail333.ru",
+  "email": "user@mail1.ru",
   "password": "123456"
 }
 

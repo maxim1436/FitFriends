@@ -6,7 +6,6 @@ import {ShopTrainingModel} from './shop-training.model';
 import {Model} from 'mongoose';
 import {Injectable} from '@nestjs/common';
 import { DEFAULT_TRAINING_COUNT } from './shop-training.constant';
-import { FilterTrainingDto } from './dto/filter-training.dto';
 
 @Injectable()
 export class ShopTrainingRepository implements CRUDRepository<ShopTrainingEntity, string, Training> {

@@ -3,6 +3,8 @@ import { AuthModule } from './auth/auth.module';
 import { ShopUserModule } from './shop-user/shop-user.module';
 import { ShopTrainingModule } from './shop-training/shop-training.module';
 import { CRUDTrainingModule } from './shop-training/crud-training.module';
+import { ShopOrderModule } from './shop-order/shop-order.module';
+import { CRUDOrderModule } from './shop-order/crud-order.module';
 import { ConfigModule } from '@nestjs/config';
 import { ENV_FILE_PATH } from './app.constant';
 import databaseConfig from '../config/database.config';
@@ -26,7 +28,9 @@ import { jwtOptions } from '../config/jwt.config';
     AuthModule,
     ShopUserModule,
     ShopTrainingModule,
-    CRUDTrainingModule
+    CRUDTrainingModule,
+    ShopOrderModule,
+    CRUDOrderModule
   ],
   controllers: [],
   providers: [],

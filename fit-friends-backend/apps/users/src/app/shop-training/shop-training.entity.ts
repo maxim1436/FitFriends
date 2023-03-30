@@ -1,4 +1,4 @@
-import { Training, User } from '@fit-friends-backend/shared-types';
+import { Training } from '@fit-friends-backend/shared-types';
 
 export class ShopTrainingEntity implements Training {
   public _id: string;

@@ -1,7 +1,6 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ShopTrainingRepository } from './shop-training.repository';
 import { ShopTrainingEntity } from '../shop-training/shop-training.entity';
-import { Training } from '@fit-friends-backend/shared-types';
 import { CreateTrainingDto } from './dto/create-training.dto';
 import { TrainingMessage } from './shop-training.constant';
 import { UpdateTrainingDto } from './dto/update-training.dto';
