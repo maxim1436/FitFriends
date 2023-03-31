@@ -14,6 +14,7 @@ export class ShopUserEntity implements User {
   public gender: string;
   public coachSurvey?: CoachSurvey;
   public userSurvey?: UserSurvey;
+  public friends: string[];
 
   constructor(shopUser: User) {
     this.fillEntity(shopUser);
@@ -43,6 +44,7 @@ export class ShopUserEntity implements User {
     this.dateBirth = shopUser.dateBirth;
     this.location = shopUser.location;
     this.gender = shopUser.gender;
+    this.friends = [];
 
     if (this.userRole === UserRole.Coach) {
       this.coachSurvey = shopUser.coachSurvey;

@@ -13,6 +13,7 @@ export interface User {
   createdAt?: Date;
   location: string;
   gender: string;
+  friends: string[];
   coachSurvey?: CoachSurvey;
   userSurvey?: UserSurvey;
 }

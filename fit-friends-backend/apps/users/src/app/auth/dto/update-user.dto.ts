@@ -24,6 +24,10 @@ export class UpdateUserDto {
   public gender?: string;
 
   @IsOptional()
+  @IsString()
+  public friend?: string;
+
+  @IsOptional()
   @IsObject()
   public coachSurvey?: CoachSurvey;
 

@@ -15,7 +15,6 @@ import { UserOrderRdo } from '../shop-order/rdo/user-order.rdo';
 export class AuthController {
   constructor(
     private readonly authService: AuthService,
-    // private readonly shopOrderService: ShopOrderService
   ) {}
 
   @Post('register')
@@ -50,14 +49,10 @@ export class AuthController {
     return fillObject(UserRdo, existsUsers);
   }
 
-  // @UseGuards(JwtAuthGuard)
-  // @Post(':id/order/:serviceId')
-  // async createOrder(
-  //   @Param('id', MongoidValidationPipe) id: string,
-  //   @Body() dto: CreateOrderDto,
-  //   @Param('serviceId', MongoidValidationPipe) serviceId: string
-  //   ) {
-  //   const newOrder = await this.shopOrderService.create(dto, serviceId);
-  //   return fillObject(UserOrderRdo, newOrder);
-  // }
+  @UseGuards(JwtAuthGuard)
+  @Get(':id/friends')
+  async showFriends(@Param('id', MongoidValidationPipe) id: string) {
+    const friends = await this.authService.getFriends(id);
+    return fillObject(UserRdo, friends);
+  }
 }

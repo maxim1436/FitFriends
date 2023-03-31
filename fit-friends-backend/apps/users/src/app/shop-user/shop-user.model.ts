@@ -51,6 +51,11 @@ export class ShopUserModel extends Document implements User {
   public gender: string;
 
   @Prop({
+    required: true,
+  })
+  public friends: string[];
+
+  @Prop({
     required: false,
     type: Object,
   })

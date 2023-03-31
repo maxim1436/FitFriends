@@ -22,7 +22,7 @@ export class AuthService {
 
     const shopUser = {
       email, firstname, avatar, userRole: role === 'тренер' ? UserRole.Coach: UserRole.User,
-      dateBirth: dayjs(dateBirth).toDate(),
+      dateBirth: dayjs(dateBirth).toDate(), friends: [],
       location, gender, coachSurvey, userSurvey,  passwordHash: ''
     };
 
@@ -70,9 +70,30 @@ export class AuthService {
       throw new UnauthorizedException(AuthUserMessage.AUTH_USER_NOT_FOUND);
     }
 
+    if (dto.friend) {
+      const friendIndex = existUser.friends.indexOf(dto.friend);
+      if(friendIndex === -1) {
+        existUser.friends.push(dto.friend);
+      } else {
+        existUser.friends.splice(friendIndex, 1);
+      }
+      delete dto.friend;
+    }
+
     const shopUserEntity = Object.assign(new ShopUserEntity(existUser), dto);
 
     return this.shopUserRepository.update(id, shopUserEntity);
+  }
+
+  async getFriends(id: string) {
+
+    const existUser = await this.shopUserRepository.findById(id);
+
+    if (!existUser) {
+      throw new UnauthorizedException(AuthUserMessage.AUTH_USER_NOT_FOUND);
+    }
+
+    return this.shopUserRepository.findFriends(existUser.friends);
   }
 
   async getUsers(count?: number) {

@@ -53,4 +53,10 @@ export class ShopUserRepository implements CRUDRepository<ShopUserEntity, string
       .exec();
     }
   }
+
+  public async findFriends(friendsIdArray: string[]): Promise<User[]> {
+    return this.shopUserModel
+      .find({_id :{$in: [`${friendsIdArray}`]}})
+      .exec();
+  }
 }
