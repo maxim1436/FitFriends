@@ -7,11 +7,12 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { getJwtConfig } from '../../config/jwt.config';
 import { JwtStrategy } from '../auth/strategies/jwt.strategy';
-import { ShopTrainingService } from '../shop-training/shop-training.service';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
     ShopOrderModule,
+    AuthModule,
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],

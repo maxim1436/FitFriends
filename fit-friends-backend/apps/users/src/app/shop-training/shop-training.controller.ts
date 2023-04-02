@@ -16,15 +16,22 @@ export class ShopTrainingController {
 
   @UseGuards(JwtAuthGuard)
   @Post(':id/create')
-  async create( @Param('id', MongoidValidationPipe) id: string, @Body() dto: CreateTrainingDto) {
+  async create(
+    @Param('id', MongoidValidationPipe) id: string,
+    @Body() dto: CreateTrainingDto
+  ) {
     const newTraining = await this.ShopTrainingService.create(dto, id);
     return fillObject(TrainingRdo, newTraining);
   }
 
   @UseGuards(JwtAuthGuard)
   @Patch(':id/:trainingId')
-  async update(@Param('trainingId', MongoidValidationPipe) trainingId: string, @Body() dto: UpdateTrainingDto) {
-    const updatedTraining = await this.ShopTrainingService.update(trainingId, dto);
+  async update(
+    @Param('id', MongoidValidationPipe) id: string,
+    @Param('trainingId', MongoidValidationPipe) trainingId: string,
+    @Body() dto: UpdateTrainingDto
+  ) {
+    const updatedTraining = await this.ShopTrainingService.update(id, trainingId, dto);
     return fillObject(TrainingRdo, updatedTraining);
   }
 
@@ -42,7 +49,7 @@ export class ShopTrainingController {
     @Body() dto: FilterTrainingDto,
     @Param('count') count?: number
     ) {
-    const existsTrainings = await this.ShopTrainingService.getSomeTrainings(dto, count);
+    const existsTrainings = await this.ShopTrainingService.getSomeTrainings(id, dto, count);
     return fillObject(TrainingRdo, existsTrainings);
   }
 }

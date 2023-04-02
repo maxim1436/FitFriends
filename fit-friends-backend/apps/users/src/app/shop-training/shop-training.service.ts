@@ -1,3 +1,4 @@
+import { UserRole } from '@fit-friends-backend/shared-types';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ShopTrainingRepository } from './shop-training.repository';
 import { ShopTrainingEntity } from '../shop-training/shop-training.entity';
@@ -5,14 +6,27 @@ import { CreateTrainingDto } from './dto/create-training.dto';
 import { TrainingMessage } from './shop-training.constant';
 import { UpdateTrainingDto } from './dto/update-training.dto';
 import { FilterTrainingDto } from './dto/filter-training.dto';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable()
 export class ShopTrainingService {
   constructor(
     private readonly ShopTrainingRepository: ShopTrainingRepository,
+    private readonly AuthService: AuthService,
   ) {}
 
   async create(dto: CreateTrainingDto, id: string) {
+
+    const existUser = await this.AuthService.getUser(id);
+
+    if (!existUser) {
+      throw new UnauthorizedException(TrainingMessage.AUTH_USER_NOT_FOUND);
+    }
+
+    if (existUser.userRole === UserRole.User) {
+      throw new UnauthorizedException(TrainingMessage.AUTH_USER_ROLE_WRONG);
+    }
+
     const {title, avatar, level, type, time,
     price, calories, description, gender,
     videoLink, rating, special} = dto;
@@ -31,9 +45,19 @@ export class ShopTrainingService {
     return createdTraining;
   }
 
-  async update(id: string, dto: UpdateTrainingDto) {
+  async update(id: string, trainingId: string, dto: UpdateTrainingDto) {
 
-    const existTraining = await this.ShopTrainingRepository.findById(id);
+    const existUser = await this.AuthService.getUser(id);
+
+    if (!existUser) {
+      throw new UnauthorizedException(TrainingMessage.AUTH_USER_NOT_FOUND);
+    }
+
+    if (existUser.userRole === UserRole.User) {
+      throw new UnauthorizedException(TrainingMessage.AUTH_USER_ROLE_WRONG);
+    }
+
+    const existTraining = await this.ShopTrainingRepository.findById(trainingId);
 
     if (!existTraining) {
       throw new UnauthorizedException(TrainingMessage.TRAINING_NOT_FOUND);
@@ -41,14 +65,24 @@ export class ShopTrainingService {
 
     const shopTrainingEntity = Object.assign(new ShopTrainingEntity(existTraining), dto);
 
-    return this.ShopTrainingRepository.update(id, shopTrainingEntity);
+    return this.ShopTrainingRepository.update(trainingId, shopTrainingEntity);
   }
 
   async getTraining(id: string) {
     return this.ShopTrainingRepository.findById(id);
   }
 
-  async getSomeTrainings(dto: FilterTrainingDto, count?: number ) {
+  async getSomeTrainings(id: string, dto: FilterTrainingDto, count?: number ) {
+
+    const existUser = await this.AuthService.getUser(id);
+
+    if (!existUser) {
+      throw new UnauthorizedException(TrainingMessage.AUTH_USER_NOT_FOUND);
+    }
+
+    if (existUser.userRole === UserRole.User) {
+      throw new UnauthorizedException(TrainingMessage.AUTH_USER_ROLE_WRONG);
+    }
 
     const filterData = Object.assign({
         lowPrice: 0, maxPrice: 1000000,

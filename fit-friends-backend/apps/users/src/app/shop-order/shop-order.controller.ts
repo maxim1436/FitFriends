@@ -26,9 +26,8 @@ export class ShopOrderController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':id/:coachId')
+  @Get(':coachId')
   async getAllOrders(
-    @Param('id', MongoidValidationPipe) id: string,
     @Param('coachId', MongoidValidationPipe) coachId: string
   ) {
     const getAllOrdersForCoach = await this.shopOrderService.getAllOrders(coachId);

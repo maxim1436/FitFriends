@@ -14,7 +14,7 @@ Content-Type: application/json
 ###
 
 #Get all orders for coach
-GET http://localhost:3333/api/order/6425c3ce747dae4105fca8e0/6422bc52eaee6d038e1d863c HTTP/1.1
+GET http://localhost:3333/api/order/6422bc52eaee6d038e1d863c HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDI1YzNjZTc0N2RhZTQxMDVmY2E4ZTAiLCJlbWFpbCI6InVzZXJAbWFpbDEucnUiLCJ1c2VyUm9sZSI6InVzZXIiLCJmaXJzdG5hbWUiOiJNYXgzMjEiLCJpYXQiOjE2ODAxOTc3MDEsImV4cCI6MTY4MDE5Nzc2MX0.y71R3-gJ9077G1VFL4AAcoLx9IiZAt1CLLQnIpKcy1I
 
 ###

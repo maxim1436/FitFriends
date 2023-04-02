@@ -7,10 +7,12 @@ import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { getJwtConfig } from '../../config/jwt.config';
 import { JwtStrategy } from '../auth/strategies/jwt.strategy';
+import { AuthModule } from '../auth/auth.module';
 
 @Module({
   imports: [
     ShopTrainingModule,
+    AuthModule,
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],

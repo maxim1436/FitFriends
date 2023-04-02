@@ -7,9 +7,6 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
 import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { ShopOrderService } from '../shop-order/shop-order.service';
-import { CreateOrderDto } from '../shop-order/dto/create-order.dto';
-import { UserOrderRdo } from '../shop-order/rdo/user-order.rdo';
 
 @Controller('auth')
 export class AuthController {
@@ -45,7 +42,7 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   @Get(':id/users/:count')
   async showUsers(@Param('id', MongoidValidationPipe) id: string, @Param('count') count?: number) {
-    const existsUsers = await this.authService.getUsers(count);
+    const existsUsers = await this.authService.getUsers(id, count);
     return fillObject(UserRdo, existsUsers);
   }
 

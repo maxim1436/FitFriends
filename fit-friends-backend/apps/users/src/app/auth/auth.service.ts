@@ -96,7 +96,17 @@ export class AuthService {
     return this.shopUserRepository.findFriends(existUser.friends);
   }
 
-  async getUsers(count?: number) {
+  async getUsers(id: string, count?: number) {
+    const existUser = await this.shopUserRepository.findById(id);
+
+    if (!existUser) {
+      throw new UnauthorizedException(AuthUserMessage.AUTH_USER_NOT_FOUND);
+    }
+
+    if (existUser.userRole === UserRole.Coach) {
+      throw new UnauthorizedException(AuthUserMessage.AUTH_USER_ROLE_WRONG);
+    }
+
     return this.shopUserRepository.findByDefault(count);
   }
 

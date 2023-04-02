@@ -1,4 +1,4 @@
-import {Expose, Transform} from 'class-transformer';
+import {Expose} from 'class-transformer';
 import { TrainingRdo } from '../../shop-training/rdo/training.rdo';
 
 export class CoachOrderRdo {
