@@ -3,7 +3,7 @@ import { Training } from '@fit-friends-backend/shared-types';
 export class ShopTrainingEntity implements Training {
   public _id: string;
   public title: string;
-  public avatar: string;
+  public preview: string;
   public level: string;
   public type: string;
   public time: string;
@@ -27,7 +27,7 @@ export class ShopTrainingEntity implements Training {
   public fillEntity(shopTraining: Training) {
     this._id = shopTraining._id;
     this.title = shopTraining.title;
-    this.avatar = shopTraining.avatar;
+    this.preview = shopTraining.preview;
     this.level = shopTraining.level;
     this.type = shopTraining.type;
     this.time = shopTraining.time;

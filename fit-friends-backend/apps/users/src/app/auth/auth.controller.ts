@@ -1,13 +1,12 @@
-import { Body, Controller, Post, Get, Param, UseGuards, Patch } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param, UseGuards, Patch, Request } from '@nestjs/common';
 import { fillObject } from '@fit-friends-backend/core';
 import { UserRdo } from './rdo/user.rdo';
 import { AuthService } from './auth.service';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { LoginUserDto } from './dto/login-user.dto';
-import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { ApiTags } from '@nestjs/swagger/dist';
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(
@@ -26,30 +25,4 @@ export class AuthController {
     return this.authService.loginUser(user);
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get(':id')
-  async show(@Param('id', MongoidValidationPipe) id: string) {
-    const existUser = await this.authService.getUser(id);
-    return fillObject(UserRdo, existUser);
-  }
-
-  @Patch(':id')
-  async update(@Param('id', MongoidValidationPipe) id: string, @Body() dto: UpdateUserDto) {
-    const updatedUser = await this.authService.updateUser(id, dto);
-    return fillObject(UserRdo, updatedUser);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get(':id/users/:count')
-  async showUsers(@Param('id', MongoidValidationPipe) id: string, @Param('count') count?: number) {
-    const existsUsers = await this.authService.getUsers(id, count);
-    return fillObject(UserRdo, existsUsers);
-  }
-
-  @UseGuards(JwtAuthGuard)
-  @Get(':id/friends')
-  async showFriends(@Param('id', MongoidValidationPipe) id: string) {
-    const friends = await this.authService.getFriends(id);
-    return fillObject(UserRdo, friends);
-  }
 }

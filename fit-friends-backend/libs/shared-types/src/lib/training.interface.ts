@@ -3,7 +3,7 @@ import { User } from "./user.interface";
 export interface Training {
   _id?: string;
   title: string;
-  avatar: string;
+  preview: string;
   level: string;
   type: string;
   time: string;

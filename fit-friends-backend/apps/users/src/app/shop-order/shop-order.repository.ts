@@ -20,7 +20,7 @@ export class ShopOrderRepository implements CRUDRepository<ShopOrderEntity, stri
 
   public async findById(id: string): Promise<Order> {
     return this.shopOrderModel
-      .findOne({id})
+      .findOne({_id: `${id}`})
       .exec();
   }
 

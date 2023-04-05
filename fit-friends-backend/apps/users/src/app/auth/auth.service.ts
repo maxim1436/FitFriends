@@ -1,13 +1,14 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, HttpException, HttpStatus } from '@nestjs/common';
 import { ShopUserRepository } from '../shop-user/shop-user.repository';
 import { ShopUserEntity } from '../shop-user/shop-user.entity';
 import { UserRole, User } from '@fit-friends-backend/shared-types';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
 import { AuthUserMessage } from './auth.constant';
 import { LoginUserDto } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import dayjs from 'dayjs';
+
+const USER_ROLE_COACH = 'тренер'
 
 @Injectable()
 export class AuthService {
@@ -21,7 +22,7 @@ export class AuthService {
       dateBirth, location, gender, userSurvey, coachSurvey} = dto;
 
     const shopUser = {
-      email, firstname, avatar, userRole: role === 'тренер' ? UserRole.Coach: UserRole.User,
+      email, firstname, avatar, userRole: role === USER_ROLE_COACH ? UserRole.Coach: UserRole.User,
       dateBirth: dayjs(dateBirth).toDate(), friends: [],
       location, gender, coachSurvey, userSurvey,  passwordHash: ''
     };
@@ -30,7 +31,7 @@ export class AuthService {
       .findByEmail(email);
 
     if (existUser) {
-      throw new Error(AuthUserMessage.AUTH_USER_EXISTS);
+      throw new HttpException(AuthUserMessage.AUTH_USER_EXISTS, HttpStatus.CONFLICT);
     }
 
     const userEntity = await new ShopUserEntity(shopUser)
@@ -56,58 +57,6 @@ export class AuthService {
     }
 
     return shopUserEntity.toObject();
-  }
-
-  async getUser(id: string) {
-    return this.shopUserRepository.findById(id);
-  }
-
-  async updateUser(id: string, dto: UpdateUserDto) {
-
-    const existUser = await this.shopUserRepository.findById(id);
-
-    if (!existUser) {
-      throw new UnauthorizedException(AuthUserMessage.AUTH_USER_NOT_FOUND);
-    }
-
-    if (dto.friend) {
-      const friendIndex = existUser.friends.indexOf(dto.friend);
-      if(friendIndex === -1) {
-        existUser.friends.push(dto.friend);
-      } else {
-        existUser.friends.splice(friendIndex, 1);
-      }
-      delete dto.friend;
-    }
-
-    const shopUserEntity = Object.assign(new ShopUserEntity(existUser), dto);
-
-    return this.shopUserRepository.update(id, shopUserEntity);
-  }
-
-  async getFriends(id: string) {
-
-    const existUser = await this.shopUserRepository.findById(id);
-
-    if (!existUser) {
-      throw new UnauthorizedException(AuthUserMessage.AUTH_USER_NOT_FOUND);
-    }
-
-    return this.shopUserRepository.findFriends(existUser.friends);
-  }
-
-  async getUsers(id: string, count?: number) {
-    const existUser = await this.shopUserRepository.findById(id);
-
-    if (!existUser) {
-      throw new UnauthorizedException(AuthUserMessage.AUTH_USER_NOT_FOUND);
-    }
-
-    if (existUser.userRole === UserRole.Coach) {
-      throw new UnauthorizedException(AuthUserMessage.AUTH_USER_ROLE_WRONG);
-    }
-
-    return this.shopUserRepository.findByDefault(count);
   }
 
   async loginUser(user: User) {

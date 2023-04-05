@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Get, Param, UseGuards, Patch } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param, UseGuards, Patch, Request } from '@nestjs/common';
 import { fillObject } from '@fit-friends-backend/core';
 import { TrainingRdo } from './rdo/training.rdo';
 import { ShopTrainingService } from './shop-training.service';
@@ -7,7 +7,9 @@ import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UpdateTrainingDto } from './dto/update-training.dto';
 import { FilterTrainingDto } from './dto/filter-training.dto';
+import { ApiTags } from '@nestjs/swagger/dist';
 
+@ApiTags('training')
 @Controller('training')
 export class ShopTrainingController {
   constructor(
@@ -15,41 +17,41 @@ export class ShopTrainingController {
   ) {}
 
   @UseGuards(JwtAuthGuard)
-  @Post(':id/create')
+  @Post('create')
   async create(
-    @Param('id', MongoidValidationPipe) id: string,
-    @Body() dto: CreateTrainingDto
+    @Body() dto: CreateTrainingDto,
+    @Request() req
   ) {
-    const newTraining = await this.ShopTrainingService.create(dto, id);
+    const newTraining = await this.ShopTrainingService.create(dto, req.user.email);
     return fillObject(TrainingRdo, newTraining);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch(':id/:trainingId')
+  @Patch(':trainingId')
   async update(
-    @Param('id', MongoidValidationPipe) id: string,
     @Param('trainingId', MongoidValidationPipe) trainingId: string,
-    @Body() dto: UpdateTrainingDto
+    @Body() dto: UpdateTrainingDto,
+    @Request() req
   ) {
-    const updatedTraining = await this.ShopTrainingService.update(id, trainingId, dto);
+    const updatedTraining = await this.ShopTrainingService.update(trainingId, dto, req.user.email);
     return fillObject(TrainingRdo, updatedTraining);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':id/:trainingId')
+  @Get(':trainingId')
   async getTraining(@Param('trainingId', MongoidValidationPipe) trainingId: string) {
     const existTraining = await this.ShopTrainingService.getTraining(trainingId);
     return fillObject(TrainingRdo, existTraining);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':id/trainings/:count')
+  @Get('trainings/:count')
   async showTrainings(
-    @Param('id', MongoidValidationPipe) id: string,
+    @Request() req,
     @Body() dto: FilterTrainingDto,
     @Param('count') count?: number
     ) {
-    const existsTrainings = await this.ShopTrainingService.getSomeTrainings(id, dto, count);
+    const existsTrainings = await this.ShopTrainingService.getSomeTrainings(req.user.email, dto, count);
     return fillObject(TrainingRdo, existsTrainings);
   }
 }

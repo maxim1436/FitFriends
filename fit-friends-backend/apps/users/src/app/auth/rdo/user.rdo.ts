@@ -1,4 +1,5 @@
 import {Expose, Transform} from 'class-transformer';
+import { UserRole } from '@fit-friends-backend/shared-types';
 
 export class UserRdo {
   @Transform(({ obj }) => obj._id.toString())
@@ -15,13 +16,16 @@ export class UserRdo {
   public avatar: string;
 
   @Expose()
-  public userRole: string;
+  public userRole: UserRole;
 
   @Expose()
   public dateBirth: Date;
 
   @Expose()
   public location: string;
+
+  @Expose()
+  public friends: string[];
 
   @Expose()
   public gender: string;

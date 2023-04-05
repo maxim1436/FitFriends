@@ -19,7 +19,7 @@ export class ShopTrainingModel extends Document implements Training {
   @Prop({
     required: true,
   })
-  public avatar: string;
+  public preview: string;
 
   @Prop({
     required: true,

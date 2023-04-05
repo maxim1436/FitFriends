@@ -1,4 +1,4 @@
-import {Expose} from 'class-transformer';
+import {Expose, Type} from 'class-transformer';
 import { TrainingRdo } from '../../shop-training/rdo/training.rdo';
 
 export class CoachOrderRdo {
@@ -10,5 +10,6 @@ export class CoachOrderRdo {
   public totalPrice: number;
 
   @Expose()
+  @Type(() => TrainingRdo)
   public service: TrainingRdo;
 }

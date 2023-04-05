@@ -6,7 +6,9 @@ import { ShopOrderService } from './shop-order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UserOrderRdo } from './rdo/user-order.rdo';
 import { CoachOrderRdo } from './rdo/coach-order.rdo';
+import { ApiTags } from '@nestjs/swagger/dist';
 
+@ApiTags('order')
 @Controller('order')
 export class ShopOrderController {
   constructor(
@@ -14,14 +16,12 @@ export class ShopOrderController {
   ) {}
 
   @UseGuards(JwtAuthGuard)
-  @Post(':id/:serviceId/:coachId')
+  @Post(':serviceId')
   async createOrder(
-    @Param('id', MongoidValidationPipe) id: string,
     @Body() dto: CreateOrderDto,
     @Param('serviceId', MongoidValidationPipe) serviceId: string,
-    @Param('coachId', MongoidValidationPipe) coachId: string
   ) {
-    const newOrder = await this.shopOrderService.create(dto, serviceId, coachId);
+    const newOrder = await this.shopOrderService.create(dto, serviceId);
     return fillObject(UserOrderRdo, newOrder);
   }
 

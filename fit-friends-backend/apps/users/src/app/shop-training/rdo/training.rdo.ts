@@ -1,4 +1,5 @@
-import {Expose, Transform} from 'class-transformer';
+import {Expose, Transform, Type} from 'class-transformer';
+import { UserRdo } from '../../auth/rdo/user.rdo';
 
 export class TrainingRdo {
   @Transform(({ obj }) => obj._id.toString())
@@ -9,7 +10,7 @@ export class TrainingRdo {
   public title: string;
 
   @Expose()
-  public avatar: string;
+  public preview: string;
 
   @Expose()
   public level: string;
@@ -39,7 +40,8 @@ export class TrainingRdo {
   public rating: number;
 
   @Expose()
-  public coachId: string;
+  @Type(() => UserRdo)
+  public coachId: UserRdo;
 
   @Expose()
   public special: boolean;

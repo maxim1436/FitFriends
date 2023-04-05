@@ -24,7 +24,7 @@ export class ShopUserRepository implements CRUDRepository<ShopUserEntity, string
 
   public async findById(id: string): Promise<User | null> {
     return this.shopUserModel
-      .findOne({id})
+      .findOne({_id: `${id}`})
       .exec();
   }
 

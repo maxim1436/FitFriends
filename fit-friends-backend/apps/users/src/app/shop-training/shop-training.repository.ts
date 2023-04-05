@@ -7,6 +7,10 @@ import {Model} from 'mongoose';
 import {Injectable} from '@nestjs/common';
 import { DEFAULT_TRAINING_COUNT } from './shop-training.constant';
 
+const TRAINING_TIME_80_100_MIN = '80 мин — 100 мин';
+const TRAINING_TIME_100_120_MIN = '100 мин — 120 мин';
+const TRAINING_TIME_MORE_80_MIN = 'больше 80 мин';
+
 @Injectable()
 export class ShopTrainingRepository implements CRUDRepository<ShopTrainingEntity, string, Training> {
   constructor(
@@ -15,18 +19,20 @@ export class ShopTrainingRepository implements CRUDRepository<ShopTrainingEntity
 
   public async create(item: ShopTrainingEntity): Promise<Training> {
     const newShopTraining = new this.shopTrainingModel(item);
-    return newShopTraining.save();
+    return (await newShopTraining.save()).populate(['coachId']);
   }
 
   public async findById(id: string): Promise<Training> {
     return this.shopTrainingModel
-      .findOne({id})
+      .findOne({_id: `${id}`})
+      .populate(['coachId'])
       .exec();
   }
 
   public async update(id: string, item: ShopTrainingEntity): Promise<Training> {
     return this.shopTrainingModel
       .findByIdAndUpdate(id, item.toObject(), {new: true})
+      .populate(['coachId'])
       .exec();
   }
 
@@ -34,16 +40,15 @@ export class ShopTrainingRepository implements CRUDRepository<ShopTrainingEntity
     this.shopTrainingModel.deleteOne({id});
   }
 
-  public async findByFilters (filterData, count?: number): Promise<Training[]> {
+  public async findByFilters (id:string, filterData, count?: number): Promise<Training[]> {
     const { lowPrice, maxPrice, lowCalories, maxCalories, rating, time } = filterData
-
     for (let i = 0 ; i < time.length; i++) {
-      if (time[i] === '80 мин — 100 мин' || time[i] === '100 мин — 120 мин') {
+      if (time[i] === TRAINING_TIME_80_100_MIN || time[i] === TRAINING_TIME_100_120_MIN) {
 
-        if (time.includes('больше 80 мин')) {
+        if (time.includes(TRAINING_TIME_MORE_80_MIN)) {
           time.splice(i, 1);
         } else {
-          time[i] = 'больше 80 мин';
+          time[i] = TRAINING_TIME_MORE_80_MIN;
         }
       }
     }
@@ -52,6 +57,7 @@ export class ShopTrainingRepository implements CRUDRepository<ShopTrainingEntity
       const limit = DEFAULT_TRAINING_COUNT;
       return this.shopTrainingModel
       .find({
+        coachId: `${id}`,
         price: {$gte: lowPrice, $lte: maxPrice},
         calories: {$gte: lowCalories, $lte: maxCalories},
         rating: {$in: rating},
@@ -62,6 +68,7 @@ export class ShopTrainingRepository implements CRUDRepository<ShopTrainingEntity
     } else {
       return this.shopTrainingModel
       .find({
+        coachId: `${id}`,
         price: {$gte: lowPrice, $lte: maxPrice},
         calories: {$gte: lowCalories, $lte: maxCalories},
         rating: {$in: rating},

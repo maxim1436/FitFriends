@@ -1,6 +1,6 @@
 #Create order
-POST http://localhost:3333/api/order/6425c3ce747dae4105fca8e0/6424474c89318b953f242c87/6422bc52eaee6d038e1d863c HTTP/1.1
-Authorization: Bearer
+POST http://localhost:3333/api/order/642db8d3d7e18e6c2778fd9c HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDJkYjJkNDFkZWU1NDQwZTkzYjA2YWEiLCJlbWFpbCI6InVzZXJAbWFpbDIucnUiLCJ1c2VyUm9sZSI6InVzZXIiLCJmaXJzdG5hbWUiOiJZdXJpIiwiaWF0IjoxNjgwNzE5MTU3LCJleHAiOjE2ODA3MTkyMTd9.rGPx-pRAfE8mHDWsgL_c00fOz-mD5lX2sGMEDs5QNLg
 Content-Type: application/json
 
 {
@@ -14,7 +14,7 @@ Content-Type: application/json
 ###
 
 #Get all orders for coach
-GET http://localhost:3333/api/order/6422bc52eaee6d038e1d863c HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDI1YzNjZTc0N2RhZTQxMDVmY2E4ZTAiLCJlbWFpbCI6InVzZXJAbWFpbDEucnUiLCJ1c2VyUm9sZSI6InVzZXIiLCJmaXJzdG5hbWUiOiJNYXgzMjEiLCJpYXQiOjE2ODAxOTc3MDEsImV4cCI6MTY4MDE5Nzc2MX0.y71R3-gJ9077G1VFL4AAcoLx9IiZAt1CLLQnIpKcy1I
+GET http://localhost:3333/api/order/642db2dc1dee5440e93b06ae HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDJkYjJkYzFkZWU1NDQwZTkzYjA2YWUiLCJlbWFpbCI6InVzZXJAbWFpbDEucnUiLCJ1c2VyUm9sZSI6ImNvYWNoIiwiZmlyc3RuYW1lIjoiMTExMSIsImlhdCI6MTY4MDcxOTIyNSwiZXhwIjoxNjgwNzE5Mjg1fQ.NpP0OMNP1GTYX-FoPd55hWZuDINoZHXK8kJU3QojnK4
 
 ###
