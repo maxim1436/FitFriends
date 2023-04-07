@@ -1,27 +1,40 @@
-# Get user by ID
-GET http://localhost:3333/api/user/642db2dc1dee5440e93b06ae HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDJkYjJkYzFkZWU1NDQwZTkzYjA2YWUiLCJlbWFpbCI6InVzZXJAbWFpbDEucnUiLCJ1c2VyUm9sZSI6ImNvYWNoIiwiZmlyc3RuYW1lIjoiWXVyaSIsImlhdCI6MTY4MDcxNjc0MywiZXhwIjoxNjgwNzE2ODAzfQ.Edi8ArEl1PJx4H-Ic2sKDuTyOvC0LVet81uw8NhtaD4
-###
-
-#Update user
-PATCH  http://localhost:3333/api/user/642db2dc1dee5440e93b06ae HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDJkYjJkYzFkZWU1NDQwZTkzYjA2YWUiLCJlbWFpbCI6InVzZXJAbWFpbDEucnUiLCJ1c2VyUm9sZSI6ImNvYWNoIiwiZmlyc3RuYW1lIjoiMTExMSIsImlhdCI6MTY4MDcxNzc0MiwiZXhwIjoxNjgwNzE3ODAyfQ.bmc-RaqOdzVzIacfIJiYBbT8GTUF00ejFuQDFMWhI_8
+# Login user by email and password
+# @name login
+POST http://localhost:3333/api/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "friends": "642db2d41dee5440e93b06aa"
+  "email": "user@mail123W.ru",
+  "password": "654321"
+}
+
+###
+@authToken = {{login.response.body.access_token}}
+
+#Update user
+# @name updateUser
+PATCH  http://localhost:3333/api/user/update HTTP/1.1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "friend": "642db2d41dee5440e93b06aa"
 }
 
 ###
 
-# Get users by default
-GET http://localhost:3333/api/user/642db2d41dee5440e93b06aa/users/4 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDJkYjJkYzFkZWU1NDQwZTkzYjA2YWUiLCJlbWFpbCI6InVzZXJAbWFpbDEucnUiLCJ1c2VyUm9sZSI6ImNvYWNoIiwiZmlyc3RuYW1lIjoiMTExMSIsImlhdCI6MTY4MDcxNzM5NCwiZXhwIjoxNjgwNzE3NDU0fQ.R0K1ytCjHBARdk5Jsfjnrao23S4LA2B3BTtIQKmBAWU
+# Get user by ID
+GET http://localhost:3333/api/user/642db2dc1dee5440e93b06ae HTTP/1.1
+Authorization: Bearer {{authToken}}
+###
 
+# Get users by default
+GET http://localhost:3333/api/user HTTP/1.1
+Authorization: Bearer {{authToken}}
 ###
 
 # Get friends by default
-GET http://localhost:3333/api/user/642db2dc1dee5440e93b06ae/friends HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDJkYjJkYzFkZWU1NDQwZTkzYjA2YWUiLCJlbWFpbCI6InVzZXJAbWFpbDEucnUiLCJ1c2VyUm9sZSI6ImNvYWNoIiwiZmlyc3RuYW1lIjoiMTExMSIsImlhdCI6MTY4MDcxNzc0MiwiZXhwIjoxNjgwNzE3ODAyfQ.bmc-RaqOdzVzIacfIJiYBbT8GTUF00ejFuQDFMWhI_8
+GET http://localhost:3333/api/user/642fc9f2e361ce5d56ad6bdd/friends HTTP/1.1
+Authorization: Bearer {{authToken}}
 
 ###

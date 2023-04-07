@@ -41,15 +41,15 @@ export class ShopUserRepository implements CRUDRepository<ShopUserEntity, string
   }
 
   public async findByDefault (count?: number): Promise<User[]> {
-
     if (count >= DEFAULT_USER_COUNT) {
       const limit = DEFAULT_USER_COUNT;
       return this.shopUserModel
       .find({}, {}, {limit})
       .exec();
     } else {
+      const limit = count;
       return this.shopUserModel
-      .find({}, {}, {count})
+      .find({}, {}, {limit})
       .exec();
     }
   }

@@ -1,6 +1,20 @@
+# Login user by email and password
+# @name login
+POST http://localhost:3333/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@mail1.ru",
+  "password": "654321"
+}
+
+###
+
+@authToken = {{login.response.body.access_token}}
+
 # Create a new training
 POST http://localhost:3333/api/training/create HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDJkYjJkNDFkZWU1NDQwZTkzYjA2YWEiLCJlbWFpbCI6InVzZXJAbWFpbDIucnUiLCJ1c2VyUm9sZSI6InVzZXIiLCJmaXJzdG5hbWUiOiJZdXJpIiwiaWF0IjoxNjgwNzE4MDU3LCJleHAiOjE2ODA3MTgxMTd9._klPsM7wlNx6cqq_K7S5bMVx-QNI0cVEVxpD7JDdDvo
+Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
 {
@@ -20,9 +34,9 @@ Content-Type: application/json
 
 ###
 
-# Update a new training
+# Update training
 PATCH  http://localhost:3333/api/training/642db8d3d7e18e6c2778fd9c HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDJkYjJkYzFkZWU1NDQwZTkzYjA2YWUiLCJlbWFpbCI6InVzZXJAbWFpbDEucnUiLCJ1c2VyUm9sZSI6ImNvYWNoIiwiZmlyc3RuYW1lIjoiMTExMSIsImlhdCI6MTY4MDcxODg3OSwiZXhwIjoxNjgwNzE4OTM5fQ.1GgxQfcIYK2lpYCFGgaumT3FbKfH1jgNnwi0V9XxD4k
+Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
 {
@@ -34,12 +48,11 @@ Content-Type: application/json
 
 # Get training by ID
 GET http://localhost:3333/api/training/642db8d3d7e18e6c2778fd9c HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDJkYjJkNDFkZWU1NDQwZTkzYjA2YWEiLCJlbWFpbCI6InVzZXJAbWFpbDIucnUiLCJ1c2VyUm9sZSI6InVzZXIiLCJmaXJzdG5hbWUiOiJZdXJpIiwiaWF0IjoxNjgwNzE4OTY4LCJleHAiOjE2ODA3MTkwMjh9.WMyxNy2_J1iMTWXBxi2JbQ9_2hvsyvc6ued46wtT08E
-
+Authorization: Bearer {{authToken}}
 ###
 #Get trainings with filters
-GET http://localhost:3333/api/training/trainings/4 HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDJkYmNkOTRhYTQzYTBkNTU3NjlkMDYiLCJlbWFpbCI6InVzZXJAbWFpbDE0NDQucnUiLCJ1c2VyUm9sZSI6ImNvYWNoIiwiZmlyc3RuYW1lIjoiWXVyaSIsImlhdCI6MTY4MDcxOTA2OCwiZXhwIjoxNjgwNzE5MTI4fQ.MEsefR8THSwpJEzf2RKJqBNuyzowiWqI1jyxPMKXUJU
+GET http://localhost:3333/api/training HTTP/1.1
+Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
 {

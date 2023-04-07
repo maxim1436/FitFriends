@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Get, Param, UseGuards, Patch, Request } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param, UseGuards, Patch, Request, Query } from '@nestjs/common';
 import { fillObject } from '@fit-friends-backend/core';
 import { TrainingRdo } from './rdo/training.rdo';
 import { ShopTrainingService } from './shop-training.service';
@@ -7,7 +7,7 @@ import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { UpdateTrainingDto } from './dto/update-training.dto';
 import { FilterTrainingDto } from './dto/filter-training.dto';
-import { ApiTags } from '@nestjs/swagger/dist';
+import { ApiTags, ApiOperation } from '@nestjs/swagger/dist';
 
 @ApiTags('training')
 @Controller('training')
@@ -17,6 +17,7 @@ export class ShopTrainingController {
   ) {}
 
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({description: 'Create new training'})
   @Post('create')
   async create(
     @Body() dto: CreateTrainingDto,
@@ -27,6 +28,7 @@ export class ShopTrainingController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({description: 'Update training'})
   @Patch(':trainingId')
   async update(
     @Param('trainingId', MongoidValidationPipe) trainingId: string,
@@ -38,6 +40,7 @@ export class ShopTrainingController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({description: 'Get full information about training'})
   @Get(':trainingId')
   async getTraining(@Param('trainingId', MongoidValidationPipe) trainingId: string) {
     const existTraining = await this.ShopTrainingService.getTraining(trainingId);
@@ -45,13 +48,14 @@ export class ShopTrainingController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get('trainings/:count')
+  @ApiOperation({description: 'Get some trainings'})
+  @Get('')
   async showTrainings(
     @Request() req,
     @Body() dto: FilterTrainingDto,
-    @Param('count') count?: number
+    @Query() query
     ) {
-    const existsTrainings = await this.ShopTrainingService.getSomeTrainings(req.user.email, dto, count);
+    const existsTrainings = await this.ShopTrainingService.getSomeTrainings(req.user.email, dto, query.count);
     return fillObject(TrainingRdo, existsTrainings);
   }
 }

@@ -1,11 +1,11 @@
-import { Body, Controller, Post, Get, Param, UseGuards, Patch, Request } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param, UseGuards, Patch, Request, Query } from '@nestjs/common';
 import { fillObject } from '@fit-friends-backend/core';
 import { UserRdo } from '../auth/rdo/user.rdo';
 import { ShopUserService } from './shop-user.service';
 import { UpdateUserDto } from '../auth/dto/update-user.dto';
 import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { ApiTags } from '@nestjs/swagger/dist';
+import { ApiTags, ApiOperation } from '@nestjs/swagger/dist';
 
 @ApiTags('user')
 @Controller('user')
@@ -15,6 +15,7 @@ export class ShopUserController {
   ) {}
 
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({description: 'Get full information about user'})
   @Get(':id')
   async show(@Param('id', MongoidValidationPipe) id: string) {
     const existUser = await this.ShopUserService.getUser(id);
@@ -22,24 +23,26 @@ export class ShopUserController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @Patch(':id')
-  async update(@Param('id', MongoidValidationPipe) id: string, @Body() dto: UpdateUserDto, @Request() req) {
-    const updatedUser = await this.ShopUserService.updateUser(id, dto, req.user.email);
+  @ApiOperation({description: 'Update user'})
+  @Patch('update')
+  async update(@Body() dto: UpdateUserDto, @Request() req) {
+    const updatedUser = await this.ShopUserService.updateUser(dto, req.user.email);
     return fillObject(UserRdo, updatedUser);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Get(':id/users/:count')
+  @ApiOperation({description: 'Get some users'})
+  @Get('')
   async showUsers(
-    @Param('id', MongoidValidationPipe) id: string,
     @Request() req,
-    @Param('count') count?: number
+    @Query() query
   ) {
-    const existsUsers = await this.ShopUserService.getUsers(id, req.user.email, count);
+    const existsUsers = await this.ShopUserService.getUsers(req.user.email, query.count);
     return fillObject(UserRdo, existsUsers);
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({description: 'Get user`s friends'})
   @Get(':id/friends')
   async showFriends(@Param('id', MongoidValidationPipe) id: string) {
     const friends = await this.ShopUserService.getFriends(id);

@@ -6,7 +6,7 @@ import { ShopOrderService } from './shop-order.service';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { UserOrderRdo } from './rdo/user-order.rdo';
 import { CoachOrderRdo } from './rdo/coach-order.rdo';
-import { ApiTags } from '@nestjs/swagger/dist';
+import { ApiTags, ApiOperation } from '@nestjs/swagger/dist';
 
 @ApiTags('order')
 @Controller('order')
@@ -16,6 +16,7 @@ export class ShopOrderController {
   ) {}
 
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({description: 'Create new order'})
   @Post(':serviceId')
   async createOrder(
     @Body() dto: CreateOrderDto,
@@ -26,6 +27,7 @@ export class ShopOrderController {
   }
 
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({description: 'Get all orders for coach'})
   @Get(':coachId')
   async getAllOrders(
     @Param('coachId', MongoidValidationPipe) coachId: string

@@ -66,6 +66,7 @@ export class ShopTrainingRepository implements CRUDRepository<ShopTrainingEntity
       .populate(['coachId'])
       .exec();
     } else {
+      const limit = count;
       return this.shopTrainingModel
       .find({
         coachId: `${id}`,
@@ -73,7 +74,7 @@ export class ShopTrainingRepository implements CRUDRepository<ShopTrainingEntity
         calories: {$gte: lowCalories, $lte: maxCalories},
         rating: {$in: rating},
         time: {$in: time}
-      }, {}, {count})
+      }, {}, {limit})
       .populate(['coachId'])
       .exec();
     }

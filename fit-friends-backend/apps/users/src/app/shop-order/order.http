@@ -1,6 +1,20 @@
+# Login user by email and password
+# @name login
+POST http://localhost:3333/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@mail123W.ru",
+  "password": "654321"
+}
+
+###
+
+@authToken = {{login.response.body.access_token}}
+
 #Create order
 POST http://localhost:3333/api/order/642db8d3d7e18e6c2778fd9c HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDJkYjJkNDFkZWU1NDQwZTkzYjA2YWEiLCJlbWFpbCI6InVzZXJAbWFpbDIucnUiLCJ1c2VyUm9sZSI6InVzZXIiLCJmaXJzdG5hbWUiOiJZdXJpIiwiaWF0IjoxNjgwNzE5MTU3LCJleHAiOjE2ODA3MTkyMTd9.rGPx-pRAfE8mHDWsgL_c00fOz-mD5lX2sGMEDs5QNLg
+Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
 {
@@ -15,6 +29,5 @@ Content-Type: application/json
 
 #Get all orders for coach
 GET http://localhost:3333/api/order/642db2dc1dee5440e93b06ae HTTP/1.1
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDJkYjJkYzFkZWU1NDQwZTkzYjA2YWUiLCJlbWFpbCI6InVzZXJAbWFpbDEucnUiLCJ1c2VyUm9sZSI6ImNvYWNoIiwiZmlyc3RuYW1lIjoiMTExMSIsImlhdCI6MTY4MDcxOTIyNSwiZXhwIjoxNjgwNzE5Mjg1fQ.NpP0OMNP1GTYX-FoPd55hWZuDINoZHXK8kJU3QojnK4
-
+Authorization: Bearer {{authToken}}
 ###

@@ -44,7 +44,7 @@ export class ShopUserEntity implements User {
     this.dateBirth = shopUser.dateBirth;
     this.location = shopUser.location;
     this.gender = shopUser.gender;
-    this.friends = [];
+    this.friends = shopUser.friends;
 
     if (this.userRole === UserRole.Coach) {
       this.coachSurvey = shopUser.coachSurvey;
