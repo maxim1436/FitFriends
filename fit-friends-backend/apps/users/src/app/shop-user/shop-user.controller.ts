@@ -15,7 +15,10 @@ export class ShopUserController {
   ) {}
 
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({description: 'Get full information about user'})
+  @ApiOperation({
+    description: 'Get full information about user',
+    summary: 'Get full information about user'
+  })
   @Get(':id')
   async show(@Param('id', MongoidValidationPipe) id: string) {
     const existUser = await this.ShopUserService.getUser(id);
@@ -23,7 +26,10 @@ export class ShopUserController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({description: 'Update user'})
+  @ApiOperation({
+    description: 'Update user',
+    summary: 'Update user'
+  })
   @Patch('update')
   async update(@Body() dto: UpdateUserDto, @Request() req) {
     const updatedUser = await this.ShopUserService.updateUser(dto, req.user.email);
@@ -31,7 +37,10 @@ export class ShopUserController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({description: 'Get some users'})
+  @ApiOperation({
+    description: 'Get some users',
+    summary: 'Get some users'
+  })
   @Get('')
   async showUsers(
     @Request() req,
@@ -42,7 +51,10 @@ export class ShopUserController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({description: 'Get user`s friends'})
+  @ApiOperation({
+    description: 'Get user`s friends',
+    summary: 'Get user`s friends'
+  })
   @Get(':id/friends')
   async showFriends(@Param('id', MongoidValidationPipe) id: string) {
     const friends = await this.ShopUserService.getFriends(id);

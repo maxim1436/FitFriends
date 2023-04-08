@@ -17,7 +17,10 @@ export class ShopTrainingController {
   ) {}
 
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({description: 'Create new training'})
+  @ApiOperation({
+    description: 'Create new training',
+    summary: 'Create new training'
+  })
   @Post('create')
   async create(
     @Body() dto: CreateTrainingDto,
@@ -28,7 +31,10 @@ export class ShopTrainingController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({description: 'Update training'})
+  @ApiOperation({
+    description: 'Update training',
+    summary: 'Update training'
+  })
   @Patch(':trainingId')
   async update(
     @Param('trainingId', MongoidValidationPipe) trainingId: string,
@@ -40,7 +46,10 @@ export class ShopTrainingController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({description: 'Get full information about training'})
+  @ApiOperation({
+    description: 'Get full information about training',
+    summary: 'Get full information about training'
+  })
   @Get(':trainingId')
   async getTraining(@Param('trainingId', MongoidValidationPipe) trainingId: string) {
     const existTraining = await this.ShopTrainingService.getTraining(trainingId);
@@ -48,7 +57,10 @@ export class ShopTrainingController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({description: 'Get some trainings'})
+  @ApiOperation({
+    description: 'Get some trainings',
+    summary: 'Get some trainings'
+  })
   @Get('')
   async showTrainings(
     @Request() req,

@@ -50,6 +50,7 @@ Content-Type: application/json
 GET http://localhost:3333/api/training/642db8d3d7e18e6c2778fd9c HTTP/1.1
 Authorization: Bearer {{authToken}}
 ###
+
 #Get trainings with filters
 GET http://localhost:3333/api/training HTTP/1.1
 Authorization: Bearer {{authToken}}

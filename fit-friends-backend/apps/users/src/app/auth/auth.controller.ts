@@ -13,14 +13,20 @@ export class AuthController {
     private readonly authService: AuthService,
   ) {}
 
-  @ApiOperation({description: 'Create new user'})
+  @ApiOperation({
+    description: 'Create new user',
+    summary: 'Create new user'
+  })
   @Post('register')
   async create(@Body() dto: CreateUserDto) {
     const newUser = await this.authService.register(dto);
     return fillObject(UserRdo, newUser);
   }
 
-  @ApiOperation({description: 'Authenticate user'})
+  @ApiOperation({
+    description: 'Authenticate user',
+    summary: 'Authenticate user'
+  })
   @Post('login')
   async login(@Body() dto: LoginUserDto) {
     const user = await this.authService.verifyUser(dto);

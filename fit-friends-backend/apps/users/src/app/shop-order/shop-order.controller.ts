@@ -16,7 +16,10 @@ export class ShopOrderController {
   ) {}
 
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({description: 'Create new order'})
+  @ApiOperation({
+    description: 'Create new order',
+    summary: 'Create new order'
+  })
   @Post(':serviceId')
   async createOrder(
     @Body() dto: CreateOrderDto,
@@ -27,7 +30,10 @@ export class ShopOrderController {
   }
 
   @UseGuards(JwtAuthGuard)
-  @ApiOperation({description: 'Get all orders for coach'})
+  @ApiOperation({
+    description: 'Get all orders for coach',
+    summary: 'Get all orders for coach'
+  })
   @Get(':coachId')
   async getAllOrders(
     @Param('coachId', MongoidValidationPipe) coachId: string
