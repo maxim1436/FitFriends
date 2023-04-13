@@ -12,6 +12,7 @@ import {validateEnvironments} from './env.validation';
 import { MongooseModule } from '@nestjs/mongoose';
 import { getMongoDbConfig } from '../config/mongodb.config';
 import { jwtOptions } from '../config/jwt.config';
+import { FoodDiaryModule } from './food-diary/food-diary.module';
 
 @Module({
   imports: [
@@ -26,6 +27,7 @@ import { jwtOptions } from '../config/jwt.config';
       getMongoDbConfig()
     ),
     AuthModule,
+    FoodDiaryModule,
     ShopUserModule,
     ShopTrainingModule,
     CRUDTrainingModule,

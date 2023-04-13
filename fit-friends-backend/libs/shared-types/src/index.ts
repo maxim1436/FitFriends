@@ -8,3 +8,8 @@ export * from './lib/order.interface';
 export * from './lib/personal-training.interface';
 export * from './lib/training.interface';
 export * from './lib/user-survey.interface';
+export * from './lib/food-diary.interface';
+export * from './lib/season-ticket.enterface';
+export * from './lib/training-diary.interface';
+export * from './lib/type-of-eating.enum';
+export * from './lib/user-balance.interface';

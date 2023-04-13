@@ -5,5 +5,6 @@ export interface FoodDiary {
   caloriesAmount: number;
   date: Date;
   typeOfEating: TypeOfEating;
+  user?: string;
 }
 

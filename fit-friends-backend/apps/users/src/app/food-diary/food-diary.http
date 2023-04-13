@@ -1,0 +1,47 @@
+# Login user by email and password
+# @name login
+POST http://localhost:3333/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@mail2.ru",
+  "password": "123456"
+}
+
+###
+
+@authToken = {{login.response.body.access_token}}
+
+# Create a new food diary
+POST http://localhost:3333/api/foodDiary/create HTTP/1.1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "caloriesAmount": 155,
+  "date": "2021-10-24",
+  "typeOfEating": "перекус"
+}
+
+###
+
+# Update food diary
+PATCH  http://localhost:3333/api/foodDiary/64381d761a4f882524397a5c HTTP/1.1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "caloriesAmount": 200
+}
+
+###
+
+# Get food diary by ID
+GET  http://localhost:3333/api/foodDiary/64381d761a4f882524397a5c HTTP/1.1
+Authorization: Bearer {{authToken}}
+###
+
+# Delete food diary by ID
+DELETE http://localhost:3333/api/foodDiary/6438206eb372e6573656d515 HTTP/1.1
+Authorization: Bearer {{authToken}}
+###
