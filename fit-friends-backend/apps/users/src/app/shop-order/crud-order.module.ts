@@ -24,5 +24,6 @@ import { CRUDTrainingModule } from '../shop-training/crud-training.module';
   ],
   controllers: [ShopOrderController],
   providers: [ShopOrderService, JwtStrategy],
+  exports: [ShopOrderService],
 })
 export class CRUDOrderModule {}

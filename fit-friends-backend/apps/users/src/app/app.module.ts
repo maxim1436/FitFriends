@@ -13,6 +13,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { getMongoDbConfig } from '../config/mongodb.config';
 import { jwtOptions } from '../config/jwt.config';
 import { FoodDiaryModule } from './food-diary/food-diary.module';
+import { TrainingDiaryModule } from './training-diary/training-diary.module';
 
 @Module({
   imports: [
@@ -28,6 +29,7 @@ import { FoodDiaryModule } from './food-diary/food-diary.module';
     ),
     AuthModule,
     FoodDiaryModule,
+    TrainingDiaryModule,
     ShopUserModule,
     ShopTrainingModule,
     CRUDTrainingModule,

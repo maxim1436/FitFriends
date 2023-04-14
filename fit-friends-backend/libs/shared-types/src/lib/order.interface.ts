@@ -5,6 +5,7 @@ export interface Order {
   orderType: OrderType;
   serviceId?: string;
   coachId?: string;
+  userId?: string;
   price: number;
   amount: number;
   totalPrice: number;

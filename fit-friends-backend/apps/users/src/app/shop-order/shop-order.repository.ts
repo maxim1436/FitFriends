@@ -15,12 +15,13 @@ export class ShopOrderRepository implements CRUDRepository<ShopOrderEntity, stri
 
   public async create(item: ShopOrderEntity): Promise<Order> {
     const newShopOrder = new this.shopOrderModel(item);
-    return (await newShopOrder.save()).populate(['service']);
+    return (await newShopOrder.save()).populate(['service', 'coach', 'user']);
   }
 
   public async findById(id: string): Promise<Order> {
     return this.shopOrderModel
       .findOne({_id: `${id}`})
+      .populate(['service', 'coach', 'user'])
       .exec();
   }
 

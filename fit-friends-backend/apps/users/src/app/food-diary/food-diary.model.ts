@@ -35,4 +35,3 @@ export class FoodDiaryModel extends Document implements FoodDiary {
 }
 
 export const FoodDiarySchema = SchemaFactory.createForClass(FoodDiaryModel);
-

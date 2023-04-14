@@ -10,6 +10,7 @@ export class ShopOrderEntity implements Order {
   public paymentType: string;
   public dateBirth: Date;
   public coach: string;
+  public user: string;
 
   constructor(shopOrder: Order) {
     this.fillEntity(shopOrder);
@@ -24,6 +25,7 @@ export class ShopOrderEntity implements Order {
     this.orderType = shopOrder.orderType;
     this.service = shopOrder.serviceId;
     this.coach = shopOrder.coachId;
+    this.user = shopOrder.userId;
     this.price = shopOrder.price;
     this.amount = shopOrder.amount;
     this.totalPrice = shopOrder.totalPrice;

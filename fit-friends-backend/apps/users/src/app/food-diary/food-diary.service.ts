@@ -5,9 +5,9 @@ import { UserRole, TypeOfEating } from '@fit-friends-backend/shared-types';
 import { Injectable, HttpException, HttpStatus} from '@nestjs/common';
 import { FoodDiaryRepository } from './food-diary.repository';
 import { FoodDiaryEntity } from './food-diary.entity';
-import { CreateFoodDiaryDto } from './dto/create-food-diary';
+import { CreateFoodDiaryDto } from './dto/create-food-diary.dto';
 import { FoodDiaryMessage } from './food-diary.constant';
-import { UpdateFoodDiaryDto } from './dto/update-food-diary';
+import { UpdateFoodDiaryDto } from './dto/update-food-diary.dto';
 import { ShopUserService } from '../shop-user/shop-user.service';
 import dayjs from 'dayjs';
 

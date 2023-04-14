@@ -4,8 +4,8 @@ POST http://localhost:3333/api/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "user@mail123W.ru",
-  "password": "654321"
+  "email": "user@mail2.ru",
+  "password": "123456"
 }
 
 ###
@@ -20,7 +20,7 @@ Content-Type: application/json
 {
   "orderType": "тренировка",
   "price": 400,
-  "amount": 2,
+  "amount": 1,
   "paymentType": "mir",
   "dateBirth": "2022-10-24"
 }

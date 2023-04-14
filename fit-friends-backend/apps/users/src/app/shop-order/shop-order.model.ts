@@ -56,6 +56,12 @@ export class ShopOrderModel extends Document implements Order {
     required: true,
   })
   public coach: ShopUserModel;
+
+  @Prop({
+    type: mongoose.Schema.Types.ObjectId, ref: 'ShopUserModel',
+    required: true,
+  })
+  public user: ShopUserModel;
 }
 
 export const ShopOrderSchema = SchemaFactory.createForClass(ShopOrderModel);

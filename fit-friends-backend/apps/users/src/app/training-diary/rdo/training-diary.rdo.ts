@@ -2,38 +2,25 @@ import {Expose, Transform, Type} from 'class-transformer';
 import { UserRdo } from '../../auth/rdo/user.rdo';
 import { TrainingRdo } from '../../shop-training/rdo/training.rdo';
 
-export class UserOrderRdo {
+export class TrainingDiaryRdo {
   @Transform(({ obj }) => obj._id.toString())
   @Expose({ name: '_id'})
   public id: string;
 
   @Expose()
-  public orderType: string;
+  public caloriesSpentAmount: number;
 
   @Expose()
-  public price: number;
+  public date: Date;
 
   @Expose()
-  public amount: number;
-
-  @Expose()
-  public totalPrice: number;
-
-  @Expose()
-  public paymentType: string;
-
-  @Expose()
-  public dateBirth: Date;
+  public timeSpentAmount: string;
 
   @Expose()
   @Type(() => UserRdo)
-  public coach: UserRdo;
-
-  @Expose()
-  @Type(() => UserRdo)
-  public user: UserRdo;
+  public userId: UserRdo;
 
   @Expose()
   @Type(() => TrainingRdo)
-  public service: TrainingRdo;
+  public trainingId: TrainingRdo;
 }

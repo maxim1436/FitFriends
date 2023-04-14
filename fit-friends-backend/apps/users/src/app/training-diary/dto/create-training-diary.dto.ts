@@ -1,18 +1,14 @@
 import { IsString, IsNumber } from 'class-validator';
-import { TypeOfEating } from '@fit-friends-backend/shared-types';
 import { ApiProperty } from '@nestjs/swagger/dist';
 
-export class CreateFoodDiaryDto {
+export class CreateTrainingDiaryDto {
 
   @ApiProperty()
   @IsNumber()
-  public caloriesAmount: number;
+  public caloriesSpentAmount: number;
 
   @ApiProperty()
   @IsString()
   public date: string;
 
-  @ApiProperty()
-  @IsString()
-  public typeOfEating: string;
 }

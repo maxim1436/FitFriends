@@ -22,7 +22,9 @@ export class ShopOrderService {
     private readonly ShopTrainingService: ShopTrainingService
   ) {}
 
-  async create(dto: CreateOrderDto, serviceId: string) {
+  async create(dto: CreateOrderDto, serviceId: string, orderCreatorEmail: string) {
+
+    const existUser = await this.ShopUserService.findByEmail(orderCreatorEmail);
 
     const existTraining = fillObject(TrainingRdo, await this.ShopTrainingService.getTraining(serviceId));
 
@@ -34,15 +36,16 @@ export class ShopOrderService {
 
     const shopOrder = {
       orderType: orderType === ORDER_TYPE_TRAINING ? OrderType.Training: OrderType.Gym,
-      serviceId: serviceId, coachId: existTraining.coachId.id, price,
-      amount, totalPrice: amount * price, paymentType,
+      serviceId: serviceId, coachId: existTraining.coachId.id,
+      price, userId: existUser._id, amount,
+      totalPrice: amount * price, paymentType,
       dateBirth: dayjs(dateBirth).toDate()
     };
 
-    const OrderEntity = await new ShopOrderEntity(shopOrder);
+    const orderEntity = await new ShopOrderEntity(shopOrder);
 
       const createdOrder = await this.ShopOrderRepository
-      .create(OrderEntity);
+      .create(orderEntity);
 
     return createdOrder;
   }

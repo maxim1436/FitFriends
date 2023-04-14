@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Get, Param, UseGuards, Patch } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param, UseGuards, Patch, Request } from '@nestjs/common';
 import { fillObject } from '@fit-friends-backend/core';
 import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
@@ -24,8 +24,9 @@ export class ShopOrderController {
   async createOrder(
     @Body() dto: CreateOrderDto,
     @Param('serviceId', MongoidValidationPipe) serviceId: string,
+    @Request() req
   ) {
-    const newOrder = await this.shopOrderService.create(dto, serviceId);
+    const newOrder = await this.shopOrderService.create(dto, serviceId, req.user.email);
     return fillObject(UserOrderRdo, newOrder);
   }
 

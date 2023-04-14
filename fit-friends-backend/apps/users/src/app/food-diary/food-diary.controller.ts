@@ -2,10 +2,10 @@ import { Body, Controller, Post, Get, Param, UseGuards, Patch, Request, Delete }
 import { fillObject } from '@fit-friends-backend/core';
 import { FoodDiaryRdo } from './rdo/food-diary.rdo';
 import { FoodDiaryService } from './food-diary.service';
-import { CreateFoodDiaryDto } from './dto/create-food-diary';
+import { CreateFoodDiaryDto } from './dto/create-food-diary.dto';
 import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { UpdateFoodDiaryDto } from './dto/update-food-diary';
+import { UpdateFoodDiaryDto } from './dto/update-food-diary.dto';
 import { ApiTags, ApiOperation } from '@nestjs/swagger/dist';
 
 @ApiTags('food diary')
