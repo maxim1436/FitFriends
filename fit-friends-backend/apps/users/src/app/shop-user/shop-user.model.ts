@@ -56,6 +56,11 @@ export class ShopUserModel extends Document implements User {
   public friends: string[];
 
   @Prop({
+    required: true,
+  })
+  public friendsAsk: string[];
+
+  @Prop({
     required: false,
     type: Object,
   })

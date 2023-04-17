@@ -56,8 +56,23 @@ export class ShopUserController {
     summary: 'Get user`s friends'
   })
   @Get(':id/friends')
-  async showFriends(@Param('id', MongoidValidationPipe) id: string) {
-    const friends = await this.ShopUserService.getFriends(id);
+  async showFriends(@Param('id', MongoidValidationPipe) id: string, @Request() req) {
+    const friends = await this.ShopUserService.getFriends(id, req.user.email);
     return fillObject(UserRdo, friends);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({
+    description: 'Update friend list',
+    summary: 'Update friend list'
+  })
+  @Patch('updateFriends/:id')
+  async updateFriends(
+    @Param('id', MongoidValidationPipe) id: string,
+    @Request() req,
+    @Query() query
+  ) {
+    const updateFriendsList = await this.ShopUserService.updateFriendsList(req.user.email, id, query.type);
+    // return fillObject(UserRdo, updateFriendsList);
   }
 }

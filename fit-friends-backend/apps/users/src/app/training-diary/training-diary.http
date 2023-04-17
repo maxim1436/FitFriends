@@ -12,7 +12,7 @@ Content-Type: application/json
 
 @authToken = {{login.response.body.access_token}}
 
-# Create a new food diary
+# Create a new training diary
 POST http://localhost:3333/api/trainingDiary/create/64397fb09bb44e31ad8a966c HTTP/1.1
 Authorization: Bearer {{authToken}}
 Content-Type: application/json
@@ -24,7 +24,7 @@ Content-Type: application/json
 
 ###
 
-# Update food diary
+# Update training diary
 PATCH  http://localhost:3333/api/trainingDiary/64399264a418229ca0d9b2d0 HTTP/1.1
 Authorization: Bearer {{authToken}}
 Content-Type: application/json
@@ -35,12 +35,12 @@ Content-Type: application/json
 
 ###
 
-# Get food diary by ID
+# Get training diary by ID
 GET  http://localhost:3333/api/trainingDiary/64399264a418229ca0d9b2d0 HTTP/1.1
 Authorization: Bearer {{authToken}}
 ###
 
-# Delete food diary by ID
+# Delete training diary by ID
 DELETE http://localhost:3333/api/trainingDiary/64399264a418229ca0d9b2d0 HTTP/1.1
 Authorization: Bearer {{authToken}}
 ###

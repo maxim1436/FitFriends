@@ -14,6 +14,7 @@ export interface User {
   location: string;
   gender: string;
   friends: string[];
+  friendsAsk: string[];
   coachSurvey?: CoachSurvey;
   userSurvey?: UserSurvey;
 }
