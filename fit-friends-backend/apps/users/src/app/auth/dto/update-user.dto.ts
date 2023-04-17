@@ -36,6 +36,11 @@ export class UpdateUserDto {
 
   @ApiProperty()
   @IsOptional()
+  @IsString()
+  public favoriteGym?: string;
+
+  @ApiProperty()
+  @IsOptional()
   @IsObject()
   public coachSurvey?: CoachSurvey;
 

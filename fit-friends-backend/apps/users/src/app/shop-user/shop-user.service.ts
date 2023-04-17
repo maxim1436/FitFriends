@@ -46,16 +46,16 @@ export class ShopUserService {
 
     const existUser = await this.shopUserRepository.findByEmail(email);
 
-    if (dto.friend) {
-      const friendIndex = existUser.friends.indexOf(dto.friend);
+    if (dto.favoriteGym) {
+      const gymIndex = existUser.favoriteGyms.indexOf(dto.favoriteGym);
 
-      if(friendIndex === -1) {
-        existUser.friends.push(dto.friend);
+      if(gymIndex === -1) {
+        existUser.favoriteGyms.push(dto.favoriteGym);
 
       } else {
-        existUser.friends.splice(friendIndex, 1);
+        existUser.favoriteGyms.splice(gymIndex, 1);
       }
-      delete dto.friend;
+      delete dto.favoriteGym;
     }
 
     const shopUserEntity = Object.assign(new ShopUserEntity(existUser), dto);
@@ -170,6 +170,7 @@ export class ShopUserService {
       default:
         throw new HttpException(UserMessage.UNKNOWN_FRIEND_LIST_UPDATE_TYPE, HttpStatus.CONFLICT);
     }
+    return existUser;
   }
 
 }

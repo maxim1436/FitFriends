@@ -15,6 +15,7 @@ export interface User {
   gender: string;
   friends: string[];
   friendsAsk: string[];
+  favoriteGyms: string[];
   coachSurvey?: CoachSurvey;
   userSurvey?: UserSurvey;
 }

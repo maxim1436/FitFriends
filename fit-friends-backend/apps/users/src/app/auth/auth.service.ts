@@ -24,7 +24,7 @@ export class AuthService {
     const shopUser = {
       email, firstname, avatar, userRole: role === USER_ROLE_COACH ? UserRole.Coach: UserRole.User,
       dateBirth: dayjs(dateBirth).toDate(), friends: [], friendsAsk: [],
-      location, gender, coachSurvey, userSurvey,  passwordHash: ''
+      favoriteGyms: [], location, gender, coachSurvey, userSurvey,  passwordHash: ''
     };
 
     const existUser = await this.shopUserRepository

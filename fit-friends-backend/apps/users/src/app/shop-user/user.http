@@ -18,7 +18,7 @@ Authorization: Bearer {{authToken}}
 Content-Type: application/json
 
 {
-  "friend": "642db2d41dee5440e93b06aa"
+  "favoriteGym": "642db2d41dee5440e93b06aa"
 }
 
 ###

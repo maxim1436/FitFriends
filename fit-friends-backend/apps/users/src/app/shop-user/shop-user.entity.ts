@@ -15,6 +15,7 @@ export class ShopUserEntity implements User {
   public coachSurvey?: CoachSurvey;
   public userSurvey?: UserSurvey;
   public friends: string[];
+  public favoriteGyms: string[];
   public friendsAsk: string[];
 
   constructor(shopUser: User) {
@@ -47,6 +48,7 @@ export class ShopUserEntity implements User {
     this.gender = shopUser.gender;
     this.friends = shopUser.friends;
     this.friendsAsk = shopUser.friendsAsk;
+    this.favoriteGyms = shopUser.favoriteGyms;
 
     if (this.userRole === UserRole.Coach) {
       this.coachSurvey = shopUser.coachSurvey;

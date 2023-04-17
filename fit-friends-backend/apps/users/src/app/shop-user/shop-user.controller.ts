@@ -73,6 +73,6 @@ export class ShopUserController {
     @Query() query
   ) {
     const updateFriendsList = await this.ShopUserService.updateFriendsList(req.user.email, id, query.type);
-    // return fillObject(UserRdo, updateFriendsList);
+    return fillObject(UserRdo, updateFriendsList);
   }
 }
