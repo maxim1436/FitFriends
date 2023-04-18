@@ -6,6 +6,7 @@ import { UpdateUserDto } from '../auth/dto/update-user.dto';
 import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ApiTags, ApiOperation } from '@nestjs/swagger/dist';
+import { UpdateUserBalanceDto } from '../auth/dto/update-user-balance.dto';
 
 @ApiTags('user')
 @Controller('user')
@@ -74,5 +75,20 @@ export class ShopUserController {
   ) {
     const updateFriendsList = await this.ShopUserService.updateFriendsList(req.user.email, id, query.type);
     return fillObject(UserRdo, updateFriendsList);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({
+    description: 'Update user balance',
+    summary: 'Update user balance'
+  })
+  @Patch('updateUserBalance')
+  async updateUserBalance(
+    @Body() dto: UpdateUserBalanceDto,
+    @Request() req,
+    @Query() query
+  ) {
+    const updateUserBalance = await this.ShopUserService.updateUserBalance(req.user.email, dto, query.type);
+    return fillObject(UserRdo, updateUserBalance);
   }
 }

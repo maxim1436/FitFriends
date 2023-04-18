@@ -1,4 +1,4 @@
-import { CoachSurvey, User, UserRole, UserSurvey } from '@fit-friends-backend/shared-types';
+import { CoachSurvey, User, UserBalance, UserRole, UserSurvey } from '@fit-friends-backend/shared-types';
 import { compare, genSalt, hash } from 'bcrypt';
 import { SALT_ROUNDS } from './shop-user.constant';
 
@@ -14,6 +14,7 @@ export class ShopUserEntity implements User {
   public gender: string;
   public coachSurvey?: CoachSurvey;
   public userSurvey?: UserSurvey;
+  public userBalance?: UserBalance;
   public friends: string[];
   public favoriteGyms: string[];
   public friendsAsk: string[];
@@ -49,6 +50,7 @@ export class ShopUserEntity implements User {
     this.friends = shopUser.friends;
     this.friendsAsk = shopUser.friendsAsk;
     this.favoriteGyms = shopUser.favoriteGyms;
+    this.userBalance = shopUser.userBalance;
 
     if (this.userRole === UserRole.Coach) {
       this.coachSurvey = shopUser.coachSurvey;

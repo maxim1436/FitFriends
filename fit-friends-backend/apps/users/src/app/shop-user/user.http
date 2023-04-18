@@ -44,3 +44,14 @@ PATCH http://localhost:3333/api/user/updateFriends/643d514f730694208fa05c03?type
 Authorization: Bearer {{authToken}}
 
 ###
+
+# Update user balance
+PATCH http://localhost:3333/api/user/updateUserBalance?type=link HTTP/1.1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "training": "ytrewq"
+}
+###
+

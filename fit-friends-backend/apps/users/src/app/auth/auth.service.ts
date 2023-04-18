@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException, HttpException, HttpStatus } from '@nestjs/common';
 import { ShopUserRepository } from '../shop-user/shop-user.repository';
 import { ShopUserEntity } from '../shop-user/shop-user.entity';
-import { UserRole, User } from '@fit-friends-backend/shared-types';
+import { UserRole, User, UserBalance } from '@fit-friends-backend/shared-types';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AuthUserMessage } from './auth.constant';
 import { LoginUserDto } from './dto/login-user.dto';
@@ -24,7 +24,8 @@ export class AuthService {
     const shopUser = {
       email, firstname, avatar, userRole: role === USER_ROLE_COACH ? UserRole.Coach: UserRole.User,
       dateBirth: dayjs(dateBirth).toDate(), friends: [], friendsAsk: [],
-      favoriteGyms: [], location, gender, coachSurvey, userSurvey,  passwordHash: ''
+      favoriteGyms: [], location, gender, coachSurvey, userSurvey,  passwordHash: '',
+      userBalance: {training: '', availableTrainingsAmount: 0, seasonTicket: '', availableSeasonTicketsAmount: 0}
     };
 
     const existUser = await this.shopUserRepository

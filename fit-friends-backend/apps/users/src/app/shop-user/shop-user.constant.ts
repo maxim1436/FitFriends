@@ -7,6 +7,8 @@ export enum UserMessage {
   FRIEND_NOT_FOUND = 'Your friend not found',
   POSSIBLE_FRIEND_NOT_FOUND = 'Possible friend not found',
   UNKNOWN_FRIEND_LIST_UPDATE_TYPE = 'Unknown friend list update type',
+  UNKNOWN_USER_BALANCE_UPDATE_TYPE = 'Unknown user balance update type',
+  USER_BALANCE_UPDATE_LINK_WRONG = 'You can not update amount without trainings/tickets link',
   USER_PASSWORD_WRONG = 'User password is wrong',
   USER_EMAIL_NOT_VALID = 'The email is not valid',
   USER_ROLE_WRONG = 'User role is wrong',

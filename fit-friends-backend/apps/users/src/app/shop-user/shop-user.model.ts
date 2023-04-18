@@ -1,5 +1,5 @@
 import { Document } from 'mongoose';
-import { User, UserRole, CoachSurvey, UserSurvey } from '@fit-friends-backend/shared-types';
+import { User, UserRole, CoachSurvey, UserSurvey, UserBalance } from '@fit-friends-backend/shared-types';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema({
@@ -76,6 +76,12 @@ export class ShopUserModel extends Document implements User {
     type: Object,
   })
   public userSurvey: UserSurvey
+
+  @Prop({
+    required: false,
+    type: Object,
+  })
+  public userBalance: UserBalance
 }
 
 export const ShopUserSchema = SchemaFactory.createForClass(ShopUserModel);

@@ -3,8 +3,8 @@ import { SeasonTicket } from "./season-ticket.enterface";
 
 export interface UserBalance {
   _id?: string;
-  training: Training;
+  training: string;
   availableTrainingsAmount: number;
-  seasonTicket: SeasonTicket;
+  seasonTicket: string;
   availableSeasonTicketsAmount: number;
 }

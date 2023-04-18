@@ -31,6 +31,9 @@ export class UserRdo {
   public gender: string;
 
   @Expose()
+  public userBalance?: object;
+
+  @Expose()
   public coachSurvey?: object;
 
   @Expose()

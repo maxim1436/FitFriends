@@ -1,6 +1,7 @@
 import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { fillObject } from '@fit-friends-backend/core';
 import { UserRdo } from '../auth/rdo/user.rdo';
+import { UpdateUserBalanceDto } from '../auth/dto/update-user-balance.dto';
 import { ShopUserRepository } from '../shop-user/shop-user.repository';
 import { ShopUserEntity } from '../shop-user/shop-user.entity';
 import { UserRole, User } from '@fit-friends-backend/shared-types';
@@ -12,6 +13,9 @@ const FRIEND_LIST_UPDATE_TYPE_ASK = 'ask';
 const FRIEND_LIST_UPDATE_TYPE_APPROVE = 'approve';
 const FRIEND_LIST_UPDATE_TYPE_CANCEL = 'cancel';
 const FRIEND_LIST_UPDATE_TYPE_DELETE = 'delete';
+const USER_BALANCE_UPDATE_TYPE_INC = 'inc';
+const USER_BALANCE_UPDATE_TYPE_DEC = 'dec';
+const USER_BALANCE_UPDATE_TYPE_LINK = 'link';
 
 @Injectable()
 export class ShopUserService {
@@ -40,6 +44,61 @@ export class ShopUserService {
     }
 
     return existUser;
+  }
+
+  async updateUserBalance(email: string, dto: UpdateUserBalanceDto, updateType?: string) {
+    const {training, availableTrainingsAmount, seasonTicket, availableSeasonTicketsAmount} = dto;
+    const existUser = await this.shopUserRepository.findByEmail(email);
+
+    if (!existUser) {
+      throw new HttpException(UserMessage.USER_NOT_FOUND, HttpStatus.CONFLICT);
+    }
+
+    if (existUser.userRole === UserRole.Coach) {
+      throw new HttpException(UserMessage.USER_ROLE_WRONG, HttpStatus.CONFLICT);
+    }
+
+    switch(updateType) {
+      case USER_BALANCE_UPDATE_TYPE_INC:
+        {
+          if(availableTrainingsAmount && existUser.userBalance.training.length) {
+            existUser.userBalance.availableTrainingsAmount =+ availableTrainingsAmount;
+          } else if(availableSeasonTicketsAmount && existUser.userBalance.seasonTicket.length) {
+            existUser.userBalance.availableSeasonTicketsAmount =+ availableSeasonTicketsAmount;
+          } else {
+            throw new HttpException(UserMessage.USER_BALANCE_UPDATE_LINK_WRONG, HttpStatus.CONFLICT);
+          }
+        };
+        break;
+      case USER_BALANCE_UPDATE_TYPE_DEC:
+        {
+          if(availableTrainingsAmount && existUser.userBalance.training.length) {
+            existUser.userBalance.availableTrainingsAmount =- availableTrainingsAmount;
+          } else if(availableSeasonTicketsAmount && existUser.userBalance.seasonTicket.length) {
+            existUser.userBalance.availableSeasonTicketsAmount =- availableSeasonTicketsAmount;
+          } else {
+            throw new HttpException(UserMessage.USER_BALANCE_UPDATE_LINK_WRONG, HttpStatus.CONFLICT);
+          }
+        };
+        break;
+      case USER_BALANCE_UPDATE_TYPE_LINK:
+        {
+          if(training) {
+            existUser.userBalance.training = training;
+            existUser.userBalance.availableTrainingsAmount = 0;
+          } else {
+            existUser.userBalance.seasonTicket = seasonTicket;
+            existUser.userBalance.availableSeasonTicketsAmount = 0;
+          }
+        };
+        break;
+      default:
+        throw new HttpException(UserMessage.UNKNOWN_USER_BALANCE_UPDATE_TYPE, HttpStatus.CONFLICT);
+    }
+
+    const shopUserEntity = new ShopUserEntity(existUser);
+    return this.shopUserRepository.update(existUser._id, shopUserEntity);
+
   }
 
   async updateUser(dto: UpdateUserDto, email: string) {
