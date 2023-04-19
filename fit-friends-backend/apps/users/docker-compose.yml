@@ -28,3 +28,26 @@ services:
       ME_CONFIG_MONGODB_ADMINUSERNAME: admin
       ME_CONFIG_MONGODB_ADMINPASSWORD: test
       ME_CONFIG_MONGODB_URL: mongodb://admin:test@mongodb:27017/
+
+  fakesmtp:
+    image: gessnerfl/fake-smtp-server
+    container_name: "fit-friends.notify.fakesmtp"
+    hostname: "fakesmtp"
+    ports:
+      - "5025:5025"
+      - "1083:5080"
+
+  rabbitmq:
+    image: rabbitmq:3.11-management
+    container_name: fit-friends.notify.rabbitmq
+    ports:
+      - '1084:15672'
+      - '5672:5672'
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: test
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 10s
+      timeout: 5s
+      retries: 5

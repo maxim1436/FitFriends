@@ -9,6 +9,10 @@ import { ConfigModule } from '@nestjs/config';
 import { ConfigService } from '@nestjs/config';
 import { getJwtConfig } from '../../config/jwt.config';
 import { JwtStrategy } from '../auth/strategies/jwt.strategy';
+import { ClientsModule } from '@nestjs/microservices';
+import { RABBITMQ_SERVICE } from './shop-user.constant';
+import { getRabbitMqConfig } from '../../config/rabbitmq.config';
+import { EmailSubscriberModule } from '../email-subscriber/email-subscriber.module';
 
 
 @Module({
@@ -17,12 +21,20 @@ import { JwtStrategy } from '../auth/strategies/jwt.strategy';
       { name: ShopUserModel.name, schema: ShopUserSchema }
     ]),
     ShopUserModule,
+    EmailSubscriberModule,
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: getJwtConfig
-    })
+    }),
+    ClientsModule.registerAsync([
+      {
+        name: RABBITMQ_SERVICE,
+        useFactory: getRabbitMqConfig,
+        inject: [ConfigService]
+      }
+    ]),
   ],
   providers: [ShopUserRepository, ShopUserService, JwtStrategy],
   exports: [ShopUserRepository, ShopUserService],

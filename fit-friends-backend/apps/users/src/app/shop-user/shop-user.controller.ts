@@ -17,6 +17,20 @@ export class ShopUserController {
 
   @UseGuards(JwtAuthGuard)
   @ApiOperation({
+    description: 'Create new subscriber',
+    summary: 'Create new subscriber'
+  })
+  @Post('subscribe/:coachId')
+  async create(
+    @Request() req,
+    @Param('coachId', MongoidValidationPipe) coachId: string
+  ) {
+    const newSubscriber = await this.ShopUserService.addSubscriber(req.user.email, coachId);
+    return fillObject(UserRdo, newSubscriber);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({
     description: 'Get full information about user',
     summary: 'Get full information about user'
   })

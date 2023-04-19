@@ -14,6 +14,9 @@ import { getMongoDbConfig } from '../config/mongodb.config';
 import { jwtOptions } from '../config/jwt.config';
 import { FoodDiaryModule } from './food-diary/food-diary.module';
 import { TrainingDiaryModule } from './training-diary/training-diary.module';
+import { rabbitMqOptions } from '../config/rabbitmq.config';
+import { EmailSubscriberModule } from './email-subscriber/email-subscriber.module';
+import { mailOptions } from '../config/mail.config';
 
 @Module({
   imports: [
@@ -21,12 +24,13 @@ import { TrainingDiaryModule } from './training-diary/training-diary.module';
       cache: true,
       isGlobal: true,
       envFilePath: ENV_FILE_PATH,
-      load: [databaseConfig, jwtOptions],
+      load: [databaseConfig, jwtOptions, rabbitMqOptions, mailOptions],
       validate: validateEnvironments,
     }),
     MongooseModule.forRootAsync(
       getMongoDbConfig()
     ),
+    EmailSubscriberModule,
     AuthModule,
     FoodDiaryModule,
     TrainingDiaryModule,

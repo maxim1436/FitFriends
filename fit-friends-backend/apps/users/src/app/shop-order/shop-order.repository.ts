@@ -33,7 +33,7 @@ export class ShopOrderRepository implements CRUDRepository<ShopOrderEntity, stri
   }
 
   public async destroy(id: string): Promise<void> {
-    this.shopOrderModel.deleteOne({id});
+    this.shopOrderModel.deleteOne({_id: `${id}`});
   }
 
   public async findAllOrders(coachId: string): Promise<Order[]> {

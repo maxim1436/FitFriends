@@ -1,15 +1,18 @@
-import { UserRole } from '@fit-friends-backend/shared-types';
+import { UserRole, CommandEvent } from '@fit-friends-backend/shared-types';
 import { fillObject } from '@fit-friends-backend/core';
 import { TrainingRdo } from './rdo/training.rdo';
 import { UserRdo } from '../auth/rdo/user.rdo';
-import { Injectable, HttpException, HttpStatus} from '@nestjs/common';
+import { Inject, Injectable, HttpException, HttpStatus} from '@nestjs/common';
 import { ShopTrainingRepository } from './shop-training.repository';
 import { ShopTrainingEntity } from '../shop-training/shop-training.entity';
 import { CreateTrainingDto } from './dto/create-training.dto';
-import { TrainingMessage } from './shop-training.constant';
+import { TrainingMessage} from './shop-training.constant';
+import { RABBITMQ_SERVICE } from '../shop-user/shop-user.constant';
 import { UpdateTrainingDto } from './dto/update-training.dto';
 import { FilterTrainingDto } from './dto/filter-training.dto';
 import { ShopUserService } from '../shop-user/shop-user.service';
+import { ClientProxy } from '@nestjs/microservices';
+import { EmailSubscriberService } from '../email-subscriber/email-subscriber.service';
 
 const LOW_PRICE = 0;
 const MAX_PRICE = 1000000;
@@ -23,6 +26,8 @@ export class ShopTrainingService {
   constructor(
     private readonly ShopTrainingRepository: ShopTrainingRepository,
     private readonly ShopUserService: ShopUserService,
+    @Inject(RABBITMQ_SERVICE) private readonly rabbitClient: ClientProxy,
+    private readonly EmailSubscriberService: EmailSubscriberService,
   ) {}
 
   async create(dto: CreateTrainingDto, coachEmail: string) {
@@ -51,6 +56,11 @@ export class ShopTrainingService {
 
       const createdTraining = await this.ShopTrainingRepository
       .create(trainingEntity);
+
+    this.rabbitClient.emit(
+      { cmd: CommandEvent.addTraining },
+      this.EmailSubscriberService.sendNotify(existUser.email)
+    );
 
     return createdTraining;
   }

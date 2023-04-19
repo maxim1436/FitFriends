@@ -13,3 +13,5 @@ export * from './lib/season-ticket.enterface';
 export * from './lib/training-diary.interface';
 export * from './lib/type-of-eating.enum';
 export * from './lib/user-balance.interface';
+export * from './lib/subscriber.interface';
+export * from './lib/command-event.enum';

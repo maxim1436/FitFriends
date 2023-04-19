@@ -1,9 +1,11 @@
 export const SALT_ROUNDS = 10;
 export const DEFAULT_USER_COUNT = 50;
+export const RABBITMQ_SERVICE = Symbol('RABBITMQ_SERVICE');
 
 export enum UserMessage {
   USER_EXISTS = 'User with this email exists',
   USER_NOT_FOUND = 'User not found',
+  COACH_NOT_FOUND = 'Coach not found',
   FRIEND_NOT_FOUND = 'Your friend not found',
   POSSIBLE_FRIEND_NOT_FOUND = 'Possible friend not found',
   UNKNOWN_FRIEND_LIST_UPDATE_TYPE = 'Unknown friend list update type',

@@ -29,11 +29,11 @@ POST http://localhost:3333/api/auth/register HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "user@mail144.ru",
+  "email": "user@mail228.ru",
   "firstname": "Yuri",
   "avatar": "qwerty",
-  "password": "123456",
-  "role": "пользователь",
+  "password": "654321",
+  "role": "тренер",
   "dateBirth": "1990-10-24",
   "location": "Спортивная",
   "gender": "мужской",

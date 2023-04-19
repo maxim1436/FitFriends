@@ -4,7 +4,7 @@ POST http://localhost:3333/api/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "user@mail1.ru",
+  "email": "user@mail228.ru",
   "password": "654321"
 }
 

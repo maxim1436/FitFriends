@@ -1,13 +1,15 @@
-import { Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Inject, Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { fillObject } from '@fit-friends-backend/core';
 import { UserRdo } from '../auth/rdo/user.rdo';
 import { UpdateUserBalanceDto } from '../auth/dto/update-user-balance.dto';
 import { ShopUserRepository } from '../shop-user/shop-user.repository';
 import { ShopUserEntity } from '../shop-user/shop-user.entity';
-import { UserRole, User } from '@fit-friends-backend/shared-types';
+import { UserRole, User, CommandEvent } from '@fit-friends-backend/shared-types';
 import { UpdateUserDto } from '../auth/dto/update-user.dto';
-import { UserMessage } from './shop-user.constant';
+import { UserMessage, RABBITMQ_SERVICE   } from './shop-user.constant';
 import { JwtService } from '@nestjs/jwt';
+import { ClientProxy } from '@nestjs/microservices';
+import { EmailSubscriberService } from '../email-subscriber/email-subscriber.service';
 
 const FRIEND_LIST_UPDATE_TYPE_ASK = 'ask';
 const FRIEND_LIST_UPDATE_TYPE_APPROVE = 'approve';
@@ -22,6 +24,8 @@ export class ShopUserService {
   constructor(
     private readonly shopUserRepository: ShopUserRepository,
     private readonly jwtService: JwtService,
+    @Inject(RABBITMQ_SERVICE) private readonly rabbitClient: ClientProxy,
+    private readonly EmailSubscriberService: EmailSubscriberService,
   ) {}
 
   async getUser(id: string) {
@@ -31,6 +35,31 @@ export class ShopUserService {
     if (!existUser) {
       throw new HttpException(UserMessage.USER_NOT_FOUND, HttpStatus.CONFLICT);
     }
+
+    return existUser;
+  }
+
+  async addSubscriber(email: string, coachId: string) {
+    const existUser = await this.shopUserRepository.findByEmail(email);
+
+    const existCoach = await this.shopUserRepository.findById(coachId);
+
+    if (!existCoach) {
+      throw new HttpException(UserMessage.COACH_NOT_FOUND, HttpStatus.CONFLICT);
+    }
+
+    if (!existUser) {
+      throw new HttpException(UserMessage.USER_NOT_FOUND, HttpStatus.CONFLICT);
+    }
+
+    await this.rabbitClient.emit(
+      { cmd: CommandEvent.AddSubscriber },
+      this.EmailSubscriberService.addSubscriber({
+        email: existUser.email,
+        coachEmail: [existCoach.email],
+        userId: existUser._id.toString(),
+      })
+    );
 
     return existUser;
   }

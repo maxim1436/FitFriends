@@ -37,7 +37,7 @@ export class ShopTrainingRepository implements CRUDRepository<ShopTrainingEntity
   }
 
   public async destroy(id: string): Promise<void> {
-    this.shopTrainingModel.deleteOne({id});
+    this.shopTrainingModel.deleteOne({_id: `${id}`});
   }
 
   public async findByFilters (id:string, filterData, count?: number): Promise<Training[]> {

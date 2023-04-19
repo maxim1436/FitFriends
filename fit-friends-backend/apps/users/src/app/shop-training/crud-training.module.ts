@@ -8,17 +8,30 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { getJwtConfig } from '../../config/jwt.config';
 import { JwtStrategy } from '../auth/strategies/jwt.strategy';
 import { ShopUserModule } from '../shop-user/shop-user.module';
+import { EmailSubscriberModule } from '../email-subscriber/email-subscriber.module';
+import { ClientsModule } from '@nestjs/microservices';
+import { RABBITMQ_SERVICE } from '../shop-user/shop-user.constant';
+import { getRabbitMqConfig } from '../../config/rabbitmq.config';
+
 
 @Module({
   imports: [
     ShopTrainingModule,
     ShopUserModule,
+    EmailSubscriberModule,
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: getJwtConfig
     }),
+    ClientsModule.registerAsync([
+      {
+        name: RABBITMQ_SERVICE,
+        useFactory: getRabbitMqConfig,
+        inject: [ConfigService]
+      }
+    ]),
   ],
   controllers: [ShopTrainingController],
   providers: [ShopTrainingService, JwtStrategy],
