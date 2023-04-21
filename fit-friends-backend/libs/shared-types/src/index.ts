@@ -15,3 +15,4 @@ export * from './lib/type-of-eating.enum';
 export * from './lib/user-balance.interface';
 export * from './lib/subscriber.interface';
 export * from './lib/command-event.enum';
+export * from './lib/alert.interface';

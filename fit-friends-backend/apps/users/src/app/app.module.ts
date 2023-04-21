@@ -17,6 +17,8 @@ import { TrainingDiaryModule } from './training-diary/training-diary.module';
 import { rabbitMqOptions } from '../config/rabbitmq.config';
 import { EmailSubscriberModule } from './email-subscriber/email-subscriber.module';
 import { mailOptions } from '../config/mail.config';
+import { ShopAlertModule } from './shop-alert/shop-alert.module';
+import { CRUDAlertModule } from './shop-alert/crud-alert.module';
 
 @Module({
   imports: [
@@ -32,6 +34,8 @@ import { mailOptions } from '../config/mail.config';
     ),
     EmailSubscriberModule,
     AuthModule,
+    CRUDAlertModule,
+    ShopAlertModule,
     FoodDiaryModule,
     TrainingDiaryModule,
     ShopUserModule,

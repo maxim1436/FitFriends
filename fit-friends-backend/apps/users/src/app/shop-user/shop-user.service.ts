@@ -1,4 +1,4 @@
-import { Inject, Injectable, HttpException, HttpStatus } from '@nestjs/common';
+import { Inject, forwardRef, Injectable, HttpException, HttpStatus } from '@nestjs/common';
 import { fillObject } from '@fit-friends-backend/core';
 import { UserRdo } from '../auth/rdo/user.rdo';
 import { UpdateUserBalanceDto } from '../auth/dto/update-user-balance.dto';
@@ -10,6 +10,8 @@ import { UserMessage, RABBITMQ_SERVICE   } from './shop-user.constant';
 import { JwtService } from '@nestjs/jwt';
 import { ClientProxy } from '@nestjs/microservices';
 import { EmailSubscriberService } from '../email-subscriber/email-subscriber.service';
+import { ShopAlertService } from '../shop-alert/shop-alert.service';
+import dayjs from 'dayjs';
 
 const FRIEND_LIST_UPDATE_TYPE_ASK = 'ask';
 const FRIEND_LIST_UPDATE_TYPE_APPROVE = 'approve';
@@ -26,6 +28,8 @@ export class ShopUserService {
     private readonly jwtService: JwtService,
     @Inject(RABBITMQ_SERVICE) private readonly rabbitClient: ClientProxy,
     private readonly EmailSubscriberService: EmailSubscriberService,
+    // @Inject(forwardRef(() => ShopAlertService))
+    // private readonly ShopAlertService: ShopAlertService,
   ) {}
 
   async getUser(id: string) {
@@ -218,6 +222,7 @@ export class ShopUserService {
           possibleFriend.friends.push(existUser._id);
           const shopUserEntity = new ShopUserEntity(existUser);
           const possibleFriendEntity = new ShopUserEntity(possibleFriend);
+          // this.ShopAlertService.create({alertText: 'New friend!', userId: existUser._id.toString(), createdAt: new Date()});
           this.shopUserRepository.update(existUser._id, shopUserEntity);
           this.shopUserRepository.update(possibleFriend._id, possibleFriendEntity);
         };

@@ -13,6 +13,8 @@ import { ClientsModule } from '@nestjs/microservices';
 import { RABBITMQ_SERVICE } from './shop-user.constant';
 import { getRabbitMqConfig } from '../../config/rabbitmq.config';
 import { EmailSubscriberModule } from '../email-subscriber/email-subscriber.module';
+import { ShopAlertModule } from '../shop-alert/shop-alert.module';
+import { CRUDAlertModule } from '../shop-alert/crud-alert.module';
 
 
 @Module({
@@ -20,7 +22,7 @@ import { EmailSubscriberModule } from '../email-subscriber/email-subscriber.modu
     MongooseModule.forFeature([
       { name: ShopUserModel.name, schema: ShopUserSchema }
     ]),
-    ShopUserModule,
+    // CRUDAlertModule,
     EmailSubscriberModule,
     PassportModule,
     JwtModule.registerAsync({
