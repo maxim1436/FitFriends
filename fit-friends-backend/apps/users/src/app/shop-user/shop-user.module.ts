@@ -22,7 +22,7 @@ import { CRUDAlertModule } from '../shop-alert/crud-alert.module';
     MongooseModule.forFeature([
       { name: ShopUserModel.name, schema: ShopUserSchema }
     ]),
-    // CRUDAlertModule,
+    CRUDAlertModule,
     EmailSubscriberModule,
     PassportModule,
     JwtModule.registerAsync({

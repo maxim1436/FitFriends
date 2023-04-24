@@ -1,8 +1,10 @@
+import { PersonalTrainingStatus } from "./personal-training-status.enum";
 
 export interface PersonalTraining {
-  initiatorId: string;
-  anotherUserID: string;
+  _id?: string;
+  initiatorId?: string;
+  anotherUserID?: string;
   createdAt?: Date;
-  changingStatusDate: string;
-  status: string
+  changingStatusDate: Date;
+  status: PersonalTrainingStatus;
 }

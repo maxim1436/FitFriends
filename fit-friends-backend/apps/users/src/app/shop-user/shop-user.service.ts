@@ -13,10 +13,9 @@ import { EmailSubscriberService } from '../email-subscriber/email-subscriber.ser
 import { ShopAlertService } from '../shop-alert/shop-alert.service';
 import dayjs from 'dayjs';
 
-const FRIEND_LIST_UPDATE_TYPE_ASK = 'ask';
-const FRIEND_LIST_UPDATE_TYPE_APPROVE = 'approve';
-const FRIEND_LIST_UPDATE_TYPE_CANCEL = 'cancel';
+const FRIEND_LIST_UPDATE_TYPE_ADD = 'add';
 const FRIEND_LIST_UPDATE_TYPE_DELETE = 'delete';
+
 const USER_BALANCE_UPDATE_TYPE_INC = 'inc';
 const USER_BALANCE_UPDATE_TYPE_DEC = 'dec';
 const USER_BALANCE_UPDATE_TYPE_LINK = 'link';
@@ -28,8 +27,7 @@ export class ShopUserService {
     private readonly jwtService: JwtService,
     @Inject(RABBITMQ_SERVICE) private readonly rabbitClient: ClientProxy,
     private readonly EmailSubscriberService: EmailSubscriberService,
-    // @Inject(forwardRef(() => ShopAlertService))
-    // private readonly ShopAlertService: ShopAlertService,
+    private readonly ShopAlertService: ShopAlertService,
   ) {}
 
   async getUser(id: string) {
@@ -192,10 +190,6 @@ export class ShopUserService {
       throw new HttpException(UserMessage.USER_NOT_FOUND, HttpStatus.CONFLICT);
     }
 
-    if (existUser.userRole === UserRole.Coach) {
-      throw new HttpException(UserMessage.USER_ROLE_WRONG, HttpStatus.CONFLICT);
-    }
-
     const possibleFriend = await this.shopUserRepository.findById(shoosenUserId);
 
     if (!possibleFriend) {
@@ -203,49 +197,30 @@ export class ShopUserService {
     }
 
     switch(updateType) {
-      case FRIEND_LIST_UPDATE_TYPE_ASK:
+      case FRIEND_LIST_UPDATE_TYPE_ADD:
         {
-          possibleFriend.friendsAsk.push(existUser._id);
-          const possibleFriendEntity = new ShopUserEntity(possibleFriend);
-          this.shopUserRepository.update(possibleFriend._id, possibleFriendEntity);
-        };
-        break;
-      case FRIEND_LIST_UPDATE_TYPE_APPROVE:
-        {
+          if (existUser.userRole === UserRole.Coach) {
+            throw new HttpException(UserMessage.USER_ROLE_WRONG, HttpStatus.CONFLICT);
+          }
+
           existUser.friends.push(shoosenUserId);
-          const friendIndex = existUser.friendsAsk.indexOf(shoosenUserId);
-          if(friendIndex === -1) {
-            throw new HttpException(UserMessage.FRIENDSHIP_ASK_NOT_FOUND, HttpStatus.CONFLICT);
-          } else {
-            existUser.friendsAsk.splice(friendIndex, 1);
-          }
-          possibleFriend.friends.push(existUser._id);
+          possibleFriend.friends.push(existUser._id.toString());
+
           const shopUserEntity = new ShopUserEntity(existUser);
           const possibleFriendEntity = new ShopUserEntity(possibleFriend);
-          // this.ShopAlertService.create({alertText: 'New friend!', userId: existUser._id.toString(), createdAt: new Date()});
-          this.shopUserRepository.update(existUser._id, shopUserEntity);
-          this.shopUserRepository.update(possibleFriend._id, possibleFriendEntity);
-        };
-        break;
-      case FRIEND_LIST_UPDATE_TYPE_CANCEL:
-        {
-          const friendIndex = existUser.friendsAsk.indexOf(shoosenUserId);
-          if(friendIndex === -1) {
-            throw new HttpException(UserMessage.FRIENDSHIP_ASK_NOT_FOUND, HttpStatus.CONFLICT);
-          } else {
-            existUser.friendsAsk.splice(friendIndex, 1);
-          }
-          const shopUserEntity = new ShopUserEntity(existUser);
-          this.shopUserRepository.update(existUser._id, shopUserEntity);
+
+          await this.ShopAlertService.create({alertText: 'New friend!', userId: possibleFriend._id.toString(), createdAt: new Date()});
+          await this.shopUserRepository.update(existUser._id, shopUserEntity);
+          await this.shopUserRepository.update(possibleFriend._id, possibleFriendEntity);
         };
         break;
       case FRIEND_LIST_UPDATE_TYPE_DELETE:
         {
-          const yourfriendsIndex = existUser.friends.indexOf(shoosenUserId);
-          if(yourfriendsIndex === -1) {
+          const yourfriendIndex = existUser.friends.indexOf(shoosenUserId);
+          if(yourfriendIndex === -1) {
             throw new HttpException(UserMessage.FRIEND_NOT_FOUND, HttpStatus.CONFLICT);
           } else {
-            existUser.friends.splice(yourfriendsIndex, 1);
+            existUser.friends.splice(yourfriendIndex, 1);
           }
 
           const possibleFriendIndex = possibleFriend.friends.indexOf(existUser._id);
@@ -254,16 +229,50 @@ export class ShopUserService {
           } else {
             possibleFriend.friends.splice(possibleFriendIndex, 1);
           }
+
           const shopUserEntity = new ShopUserEntity(existUser);
           const possibleFriendEntity = new ShopUserEntity(possibleFriend);
-          this.shopUserRepository.update(existUser._id, shopUserEntity);
-          this.shopUserRepository.update(possibleFriend._id, possibleFriendEntity);
+
+          await this.shopUserRepository.update(existUser._id, shopUserEntity);
+          await this.shopUserRepository.update(possibleFriend._id, possibleFriendEntity);
         };
         break;
       default:
         throw new HttpException(UserMessage.UNKNOWN_FRIEND_LIST_UPDATE_TYPE, HttpStatus.CONFLICT);
     }
     return existUser;
+  }
+
+  async getAlert(userEmail: string, alertId: string) {
+
+    const existUser = await this.shopUserRepository.findByEmail(userEmail);
+
+    if (!existUser) {
+      throw new HttpException(UserMessage.USER_NOT_FOUND, HttpStatus.CONFLICT);
+    }
+
+    return await this.ShopAlertService.getAlert(userEmail, alertId);
+  }
+
+  async getSomeAlerts(userEmail: string, count?: number) {
+
+    const existUser = await this.shopUserRepository.findByEmail(userEmail);
+
+    if (!existUser) {
+      throw new HttpException(UserMessage.USER_NOT_FOUND, HttpStatus.CONFLICT);
+    }
+
+    return await this.ShopAlertService.getSomeAlerts(existUser._id, count);
+  }
+
+  async deleteAlert(alertId: string, userEmail: string) {
+    const existUser = await this.shopUserRepository.findByEmail(userEmail);
+
+    if (!existUser) {
+      throw new HttpException(UserMessage.USER_NOT_FOUND, HttpStatus.CONFLICT);
+    }
+
+    return await this.ShopAlertService.deleteAlert(userEmail, alertId);
   }
 
 }

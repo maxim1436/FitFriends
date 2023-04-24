@@ -19,6 +19,7 @@ import { EmailSubscriberModule } from './email-subscriber/email-subscriber.modul
 import { mailOptions } from '../config/mail.config';
 import { ShopAlertModule } from './shop-alert/shop-alert.module';
 import { CRUDAlertModule } from './shop-alert/crud-alert.module';
+import { PersonalTrainingModule } from './personal-training/personal-training.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { CRUDAlertModule } from './shop-alert/crud-alert.module';
     EmailSubscriberModule,
     AuthModule,
     CRUDAlertModule,
+    PersonalTrainingModule,
     ShopAlertModule,
     FoodDiaryModule,
     TrainingDiaryModule,

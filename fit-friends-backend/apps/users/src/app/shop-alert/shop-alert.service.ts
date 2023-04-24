@@ -13,16 +13,16 @@ import dayjs from 'dayjs';
 export class ShopAlertService {
   constructor(
     private readonly ShopAlertRepository: ShopAlertRepository,
-    @Inject(forwardRef(() => ShopUserService))
-    private readonly shopUserService: ShopUserService,
   ) {}
 
   async create(dto: CreateAlertDto) {
     const {createdAt, userId, alertText} = dto;
 
+    console.log(userId);
+
     const shopAlert = {
       createdAt: dayjs(createdAt).toDate(),
-      userId: userId, alertText
+      user: userId, alertText
     };
 
     const alertEntity = await new ShopAlertEntity(shopAlert);
@@ -48,21 +48,13 @@ export class ShopAlertService {
     return existAlert;
   }
 
-  async getSomeAlerts(userEmail: string, count?: number ) {
+  async getSomeAlerts(userId: string, count?: number ) {
 
-    const existUser = await this.shopUserService.findByEmail(userEmail);
-
-    if (!existUser) {
-      throw new HttpException(AlertMessage.USER_NOT_FOUND, HttpStatus.CONFLICT);
-    }
-
-    return this.ShopAlertRepository.findByDefault(existUser._id, count);
+    return this.ShopAlertRepository.findByDefault(userId, count);
   }
 
 
-  async deleteAlert(alertId: string, userEmail: string) {
-
-    const existUser = await this.shopUserService.findByEmail(userEmail);
+  async deleteAlert(userEmail: string, alertId: string) {
 
     const existAlert = await this.ShopAlertRepository.findById(alertId);
 
@@ -70,10 +62,10 @@ export class ShopAlertService {
       throw new HttpException(AlertMessage.ALERT_NOT_FOUND, HttpStatus.CONFLICT);
     }
 
-    if(fillObject(AlertRdo, existAlert).userId.id !== fillObject(UserRdo, existUser).id) {
+    if(fillObject(AlertRdo, existAlert).userId.email !== userEmail) {
       throw new HttpException(AlertMessage.DELETE_ALERT_USER_WRONG, HttpStatus.CONFLICT);
     }
 
-    return this.ShopAlertRepository.destroy(alertId);
+    return await this.ShopAlertRepository.destroy(alertId);
   }
 }

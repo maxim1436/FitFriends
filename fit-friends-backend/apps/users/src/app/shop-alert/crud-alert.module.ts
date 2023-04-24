@@ -16,7 +16,6 @@ import { ShopAlertModule } from './shop-alert.module';
 @Module({
   imports: [
     ShopAlertModule,
-    ShopUserModule,
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],

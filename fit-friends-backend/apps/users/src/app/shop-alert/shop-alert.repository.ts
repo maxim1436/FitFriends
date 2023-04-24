@@ -35,7 +35,7 @@ export class ShopAlertRepository implements CRUDRepository<ShopAlertEntity, stri
   }
 
   public async destroy(id: string): Promise<void> {
-    this.shopAlertModel.deleteOne({_id: `${id}`});
+    await this.shopAlertModel.deleteOne({_id: `${id}`});
   }
 
   public async findByDefault (userId: string, count?: number): Promise<Alert[]> {

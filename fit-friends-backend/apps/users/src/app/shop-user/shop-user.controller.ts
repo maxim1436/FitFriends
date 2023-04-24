@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Get, Param, UseGuards, Patch, Request, Query } from '@nestjs/common';
+import { Body, Controller, Post, Get, Param, UseGuards, Patch, Request, Query, Delete } from '@nestjs/common';
 import { fillObject } from '@fit-friends-backend/core';
 import { UserRdo } from '../auth/rdo/user.rdo';
 import { ShopUserService } from './shop-user.service';
@@ -7,6 +7,7 @@ import { MongoidValidationPipe } from '../pipes/mongoid-validation.pipe';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { ApiTags, ApiOperation } from '@nestjs/swagger/dist';
 import { UpdateUserBalanceDto } from '../auth/dto/update-user-balance.dto';
+import { AlertRdo } from '../shop-alert/rdo/alert.rdo';
 
 @ApiTags('user')
 @Controller('user')
@@ -104,5 +105,45 @@ export class ShopUserController {
   ) {
     const updateUserBalance = await this.ShopUserService.updateUserBalance(req.user.email, dto, query.type);
     return fillObject(UserRdo, updateUserBalance);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({
+    description: 'Get full information about alert',
+    summary: 'Get full information about alert'
+  })
+  @Get('alerts/:alertId')
+  async getAlert(@Param('alertId', MongoidValidationPipe) alertId: string, @Request() req,) {
+    const existAlert = await this.ShopUserService.getAlert(req.user.email, alertId);
+    return fillObject(AlertRdo, existAlert);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({
+    description: 'Get some alerts',
+    summary: 'Get some alerts'
+  })
+  @Get(':id/alerts')
+  async showAlerts(
+    @Param('id', MongoidValidationPipe) id: string,
+    @Request() req,
+    @Query() query
+    ) {
+    const existsAlerts = await this.ShopUserService.getSomeAlerts(req.user.email, query.count);
+    return fillObject(AlertRdo, existsAlerts);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiOperation({
+    description: 'Delete alert',
+    summary: 'Delete alert'
+  })
+  @Delete('alerts/:alertId')
+  async deleteAlert(
+    @Param('alertId', MongoidValidationPipe) alertId: string,
+    @Request() req
+    ) {
+    const deletedTrainingDiary = await this.ShopUserService.deleteAlert(alertId, req.user.email);
+    return deletedTrainingDiary;
   }
 }

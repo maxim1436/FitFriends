@@ -4,7 +4,7 @@ POST http://localhost:3333/api/auth/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "user@mail1.ru",
+  "email": "user@mail2.ru",
   "password": "123456"
 }
 
@@ -40,7 +40,7 @@ Authorization: Bearer {{authToken}}
 ###
 
 # Update friends list
-PATCH http://localhost:3333/api/user/updateFriends/643d514f730694208fa05c03?type=delete HTTP/1.1
+PATCH http://localhost:3333/api/user/updateFriends/6443a65ec8fad5d9da5cb444?type=add HTTP/1.1
 Authorization: Bearer {{authToken}}
 
 ###
@@ -60,3 +60,21 @@ POST http://localhost:3333/api/user/subscribe/6440349cdcdb0928f8b6f041 HTTP/1.1
 Authorization: Bearer {{authToken}}
 
 ###
+
+
+# Get alerts by default
+GET http://localhost:3333/api/user/6443a65ec8fad5d9da5cb444/alerts HTTP/1.1
+Authorization: Bearer {{authToken}}
+
+###
+
+# Get alert by ID
+GET  http://localhost:3333/api/user/alerts/6443a890272bb0a059af3230 HTTP/1.1
+Authorization: Bearer {{authToken}}
+###
+
+# Delete alert by ID
+DELETE http://localhost:3333/api/user/alerts/6443a890272bb0a059af3230 HTTP/1.1
+Authorization: Bearer {{authToken}}
+###
+
