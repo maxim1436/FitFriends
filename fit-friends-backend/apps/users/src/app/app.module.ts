@@ -20,6 +20,7 @@ import { mailOptions } from '../config/mail.config';
 import { ShopAlertModule } from './shop-alert/shop-alert.module';
 import { CRUDAlertModule } from './shop-alert/crud-alert.module';
 import { PersonalTrainingModule } from './personal-training/personal-training.module';
+import { GymModule } from './gym/gym.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { PersonalTrainingModule } from './personal-training/personal-training.mo
     ),
     EmailSubscriberModule,
     AuthModule,
+    GymModule,
     CRUDAlertModule,
     PersonalTrainingModule,
     ShopAlertModule,
