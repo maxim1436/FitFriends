@@ -21,6 +21,7 @@ import { ShopAlertModule } from './shop-alert/shop-alert.module';
 import { CRUDAlertModule } from './shop-alert/crud-alert.module';
 import { PersonalTrainingModule } from './personal-training/personal-training.module';
 import { GymModule } from './gym/gym.module';
+import { CommentModule } from './comment/comment.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { GymModule } from './gym/gym.module';
       getMongoDbConfig()
     ),
     EmailSubscriberModule,
+    CommentModule,
     AuthModule,
     GymModule,
     CRUDAlertModule,

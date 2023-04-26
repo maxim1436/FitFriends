@@ -1,8 +1,8 @@
 
 export interface Comment {
   _id?: string;
-  userId: string;
-  trainingId: string;
+  user?: string;
+  training?: string;
   rating: number;
   text: string;
   dateBirth: Date;

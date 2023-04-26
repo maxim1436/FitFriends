@@ -1,0 +1,32 @@
+# Login user by email and password
+# @name login
+POST http://localhost:3333/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@mail1.ru",
+  "password": "123456"
+}
+
+###
+
+@authToken = {{login.response.body.access_token}}
+
+# Create a new comment
+POST http://localhost:3333/api/comments/create HTTP/1.1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "text": "wqqweqweqweqeqeqeqeqeqeqeqeqeqeqweqweqeqeqeqeqweqeqeqeqweqeqeqeqeqweqeqweqweqweqewqeqweewqeqwewqeweqwewqeqweqweqeqe",
+  "rating": "4",
+  "trainingId": "644947bf7f40d82e97b654ec"
+}
+
+###
+
+#Get trainings with comment
+GET http://localhost:3333/api/comments/644947bf7f40d82e97b654ec HTTP/1.1
+Authorization: Bearer {{authToken}}
+
+###
