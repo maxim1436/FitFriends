@@ -34,7 +34,7 @@ export class CommentController {
     summary: 'Get some comments'
   })
   @Get(':trainingId')
-  async showTrainings(
+  async showComments(
     @Request() req,
     @Param('trainingId', MongoidValidationPipe) trainingId: string,
     @Query() query

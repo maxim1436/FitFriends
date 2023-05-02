@@ -28,6 +28,12 @@ export class UserRdo {
   public friends: string[];
 
   @Expose()
+  public friendsAsk: string[];
+
+  @Expose()
+  public favoriteGyms: string[];
+
+  @Expose()
   public gender: string;
 
   @Expose()

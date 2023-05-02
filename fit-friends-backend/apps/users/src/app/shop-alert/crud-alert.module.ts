@@ -10,7 +10,6 @@ import { ConfigService } from '@nestjs/config';
 import { getJwtConfig } from '../../config/jwt.config';
 import { JwtStrategy } from '../auth/strategies/jwt.strategy';
 import { ShopUserModule } from '../shop-user/shop-user.module';
-import { ShopAlertController } from './shop-alert.controller';
 import { ShopAlertModule } from './shop-alert.module';
 
 @Module({
@@ -23,7 +22,7 @@ import { ShopAlertModule } from './shop-alert.module';
       useFactory: getJwtConfig
     })
   ],
-  controllers: [ShopAlertController],
+  controllers: [],
   providers: [ShopAlertService, JwtStrategy],
   exports: [ShopAlertService]
 })

@@ -20,13 +20,13 @@ export class TrainingDiaryController {
     description: 'Create new training diary',
     summary: 'Create new training diary'
   })
-  @Post('create/:trainingDiaryId')
+  @Post('create/:orderId')
   async create(
-    @Param('trainingDiaryId', MongoidValidationPipe) trainingDiaryId: string,
+    @Param('orderId', MongoidValidationPipe) orderId: string,
     @Body() dto: CreateTrainingDiaryDto,
     @Request() req
   ) {
-    const newTrainingDiary = await this.TrainingDiaryService.create(dto, req.user.email, trainingDiaryId);
+    const newTrainingDiary = await this.TrainingDiaryService.create(dto, req.user.email, orderId);
     return fillObject(TrainingDiaryRdo, newTrainingDiary);
   }
 
@@ -65,7 +65,7 @@ export class TrainingDiaryController {
     summary: 'Delete training diary'
   })
   @Delete(':trainingDiaryId')
-  async deleteFoodDiary(
+  async deleteTrainingDiary(
     @Param('trainingDiaryId', MongoidValidationPipe) trainingDiaryId: string,
     @Request() req
     ) {

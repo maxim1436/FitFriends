@@ -24,7 +24,6 @@ const USER_BALANCE_UPDATE_TYPE_LINK = 'link';
 export class ShopUserService {
   constructor(
     private readonly shopUserRepository: ShopUserRepository,
-    private readonly jwtService: JwtService,
     @Inject(RABBITMQ_SERVICE) private readonly rabbitClient: ClientProxy,
     private readonly EmailSubscriberService: EmailSubscriberService,
     private readonly ShopAlertService: ShopAlertService,
