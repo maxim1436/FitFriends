@@ -1,0 +1,40 @@
+# Login user by email and password
+# @name login
+POST http://localhost:3333/api/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "user@mail2.ru",
+  "password": "123456"
+}
+
+###
+
+@authToken = {{login.response.body.access_token}}
+
+# Create a new training
+POST http://localhost:3333/api/personal-training/create HTTP/1.1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "companionId": "6443a65ec8fad5d9da5cb444"
+}
+
+###
+
+# Update training
+PATCH  http://localhost:3333/api/personal-training/6446ae3d9dd616f7eefa97bc HTTP/1.1
+Authorization: Bearer {{authToken}}
+Content-Type: application/json
+
+{
+  "status": "approve"
+}
+
+###
+
+# Get training by ID
+GET http://localhost:3333/api/personal-training/6446ae3d9dd616f7eefa97bc HTTP/1.1
+Authorization: Bearer {{authToken}}
+###

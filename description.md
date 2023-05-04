@@ -3,7 +3,7 @@
 2. Выполняем npm install
 3. Выполняем ряд команд для настройки докера: cd apps -> cd users -> docker-compose up -d
 4. Поднимаемся в директорию fit-friends-backend
-5. Выполняем команду nx run users:serve
+5. Выполняем команду nx run fit-friends-backend:serve
 6. Получаем подтверждение в консоли, проект запущен.
 
 Тестирование http запросов:
