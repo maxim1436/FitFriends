@@ -2,7 +2,7 @@ import { Document } from 'mongoose';
 import { PersonalTraining, PersonalTrainingStatus } from '@fit-friends-backend/shared-types';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { ShopUserModel } from '../shop-user/shop-user.model';
+import { UserModel } from '../user/user.model';
 
 @Schema({
   collection: 'personal-trainings',
@@ -27,16 +27,16 @@ export class PersonalTrainingModel extends Document implements PersonalTraining 
   public status: PersonalTrainingStatus;
 
   @Prop({
-    type: mongoose.Schema.Types.ObjectId, ref: 'ShopUserModel',
+    type: mongoose.Schema.Types.ObjectId, ref: 'UserModel',
     required: true,
   })
-  public initiator: ShopUserModel;
+  public initiator: UserModel;
 
   @Prop({
-    type: mongoose.Schema.Types.ObjectId, ref: 'ShopUserModel',
+    type: mongoose.Schema.Types.ObjectId, ref: 'UserModel',
     required: true,
   })
-  public companion: ShopUserModel;
+  public companion: UserModel;
 
 }
 

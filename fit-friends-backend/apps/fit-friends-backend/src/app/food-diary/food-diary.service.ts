@@ -8,7 +8,7 @@ import { FoodDiaryEntity } from './food-diary.entity';
 import { CreateFoodDiaryDto } from './dto/create-food-diary.dto';
 import { FoodDiaryMessage } from './food-diary.constant';
 import { UpdateFoodDiaryDto } from './dto/update-food-diary.dto';
-import { ShopUserService } from '../shop-user/shop-user.service';
+import { UserService } from '../user/user.service';
 import dayjs from 'dayjs';
 
 const TYPE_OF_EATING_BREAKFAST = 'завтрак';
@@ -20,7 +20,7 @@ const TYPE_OF_EATING_SNACKING = 'перекус';
 export class FoodDiaryService {
   constructor(
     private readonly foodDiaryRepository: FoodDiaryRepository,
-    private readonly ShopUserService: ShopUserService,
+    private readonly UserService: UserService,
   ) {}
 
   private convertDtoTypeOfEatingToEnum(typeOfEating: string) {
@@ -40,7 +40,7 @@ export class FoodDiaryService {
 
   async create(dto: CreateFoodDiaryDto, userEmail: string) {
 
-    const existUser = await this.ShopUserService.findByEmail(userEmail);
+    const existUser = await this.UserService.findByEmail(userEmail);
 
     if (!existUser) {
       throw new HttpException(FoodDiaryMessage.USER_NOT_FOUND, HttpStatus.CONFLICT);
@@ -68,7 +68,7 @@ export class FoodDiaryService {
 
   async update(foodDiaryId: string, dto: UpdateFoodDiaryDto, userEmail: string) {
 
-    const existUser = await this.ShopUserService.findByEmail(userEmail);
+    const existUser = await this.UserService.findByEmail(userEmail);
 
     if (existUser.userRole === UserRole.Coach) {
       throw new HttpException(FoodDiaryMessage.USER_ROLE_WRONG, HttpStatus.CONFLICT);
@@ -91,7 +91,7 @@ export class FoodDiaryService {
 
   async getFoodDiary(id: string, userEmail: string) {
 
-    const existUser = await this.ShopUserService.findByEmail(userEmail);
+    const existUser = await this.UserService.findByEmail(userEmail);
 
     if (existUser.userRole === UserRole.Coach) {
       throw new HttpException(FoodDiaryMessage.USER_ROLE_WRONG, HttpStatus.CONFLICT);
@@ -112,7 +112,7 @@ export class FoodDiaryService {
 
   async deleteFoodDiary(id: string, userEmail: string) {
 
-    const existUser = await this.ShopUserService.findByEmail(userEmail);
+    const existUser = await this.UserService.findByEmail(userEmail);
 
     if (existUser.userRole === UserRole.Coach) {
       throw new HttpException(FoodDiaryMessage.USER_ROLE_WRONG, HttpStatus.CONFLICT);

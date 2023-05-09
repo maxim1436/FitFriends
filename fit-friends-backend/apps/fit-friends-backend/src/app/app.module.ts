@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { AuthModule } from './auth/auth.module';
-import { ShopUserModule } from './shop-user/shop-user.module';
-import { ShopTrainingModule } from './shop-training/shop-training.module';
-import { CRUDTrainingModule } from './shop-training/crud-training.module';
-import { ShopOrderModule } from './shop-order/shop-order.module';
-import { CRUDOrderModule } from './shop-order/crud-order.module';
+import { UserModule } from './user/user.module';
+import { TrainingModule } from './training/training.module';
+import { CRUDTrainingModule } from './training/crud-training.module';
+import { OrderModule } from './order/order.module';
+import { CRUDOrderModule } from './order/crud-order.module';
 import { ConfigModule } from '@nestjs/config';
 import { ENV_FILE_PATH } from './app.constant';
 import databaseConfig from '../config/database.config';
@@ -17,8 +17,8 @@ import { TrainingDiaryModule } from './training-diary/training-diary.module';
 import { rabbitMqOptions } from '../config/rabbitmq.config';
 import { EmailSubscriberModule } from './email-subscriber/email-subscriber.module';
 import { mailOptions } from '../config/mail.config';
-import { ShopAlertModule } from './shop-alert/shop-alert.module';
-import { CRUDAlertModule } from './shop-alert/crud-alert.module';
+import { AlertModule } from './alert/alert.module';
+import { CRUDAlertModule } from './alert/crud-alert.module';
 import { PersonalTrainingModule } from './personal-training/personal-training.module';
 import { GymModule } from './gym/gym.module';
 import { CommentModule } from './comment/comment.module';
@@ -41,13 +41,13 @@ import { CommentModule } from './comment/comment.module';
     GymModule,
     CRUDAlertModule,
     PersonalTrainingModule,
-    ShopAlertModule,
+    AlertModule,
     FoodDiaryModule,
     TrainingDiaryModule,
-    ShopUserModule,
-    ShopTrainingModule,
+    UserModule,
+    TrainingModule,
     CRUDTrainingModule,
-    ShopOrderModule,
+    OrderModule,
     CRUDOrderModule
   ],
   controllers: [],

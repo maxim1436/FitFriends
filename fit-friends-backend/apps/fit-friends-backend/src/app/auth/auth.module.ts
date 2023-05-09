@@ -1,17 +1,17 @@
 import { Module } from '@nestjs/common';
 import { AuthController } from './auth.controller';
-import { ShopUserModule } from '../shop-user/shop-user.module';
+import { UserModule } from '../user/user.module';
 import { AuthService } from './auth.service';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { getJwtConfig } from '../../config/jwt.config';
 import { JwtStrategy } from './strategies/jwt.strategy';
-import { ShopUserController } from '../shop-user/shop-user.controller';
+import { UserController } from '../user/user.controller';
 
 @Module({
   imports: [
-    ShopUserModule,
+    UserModule,
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
@@ -19,7 +19,7 @@ import { ShopUserController } from '../shop-user/shop-user.controller';
       useFactory: getJwtConfig
     }),
   ],
-  controllers: [AuthController, ShopUserController],
+  controllers: [AuthController, UserController],
   providers: [AuthService, JwtStrategy],
   exports:[AuthService],
 })

@@ -2,8 +2,8 @@ import { Document } from 'mongoose';
 import { Comment } from '@fit-friends-backend/shared-types';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { ShopUserModel } from '../shop-user/shop-user.model';
-import { ShopTrainingModel } from '../shop-training/shop-training.model';
+import { UserModel } from '../user/user.model';
+import { TrainingModel } from '../training/training.model';
 
 @Schema({
   collection: 'comments',
@@ -30,16 +30,16 @@ export class CommentModel extends Document implements Comment {
   public dateBirth: Date;
 
   @Prop({
-    type: mongoose.Schema.Types.ObjectId, ref: 'ShopUserModel',
+    type: mongoose.Schema.Types.ObjectId, ref: 'UserModel',
     required: true,
   })
-  public userId: ShopUserModel;
+  public userId: UserModel;
 
   @Prop({
-    type: mongoose.Schema.Types.ObjectId, ref: 'ShopTrainingModel',
+    type: mongoose.Schema.Types.ObjectId, ref: 'TrainingModel',
     required: true,
   })
-  public trainingId: ShopTrainingModel;
+  public trainingId: TrainingModel;
 }
 
 export const CommentSchema = SchemaFactory.createForClass(CommentModel);

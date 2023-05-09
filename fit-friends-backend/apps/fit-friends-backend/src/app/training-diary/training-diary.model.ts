@@ -2,8 +2,8 @@ import { Document } from 'mongoose';
 import { TrainingDiary } from '@fit-friends-backend/shared-types';
 import { Schema, SchemaFactory, Prop } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { ShopTrainingModel } from '../shop-training/shop-training.model';
-import { ShopUserModel } from '../shop-user/shop-user.model';
+import { TrainingModel } from '../training/training.model';
+import { UserModel } from '../user/user.model';
 
 @Schema({
   collection: 'training-diaries',
@@ -26,16 +26,16 @@ export class TrainingDiaryModel extends Document implements TrainingDiary {
   public timeSpentAmount: string;
 
   @Prop({
-    type: mongoose.Schema.Types.ObjectId, ref: 'ShopUserModel',
+    type: mongoose.Schema.Types.ObjectId, ref: 'UserModel',
     required: true,
   })
-  public userId: ShopUserModel;
+  public userId: UserModel;
 
   @Prop({
-    type: mongoose.Schema.Types.ObjectId, ref: 'ShopTrainingModel',
+    type: mongoose.Schema.Types.ObjectId, ref: 'TrainingModel',
     required: true,
   })
-  public trainingId: ShopTrainingModel;
+  public trainingId: TrainingModel;
 
 }
 

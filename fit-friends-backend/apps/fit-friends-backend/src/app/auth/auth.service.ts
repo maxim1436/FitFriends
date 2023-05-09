@@ -1,6 +1,6 @@
 import { Injectable, UnauthorizedException, HttpException, HttpStatus } from '@nestjs/common';
-import { ShopUserRepository } from '../shop-user/shop-user.repository';
-import { ShopUserEntity } from '../shop-user/shop-user.entity';
+import { UserRepository } from '../user/user.repository';
+import { UserEntity } from '../user/user.entity';
 import { UserRole, User } from '@fit-friends-backend/shared-types';
 import { CreateUserDto } from './dto/create-user.dto';
 import { AuthUserMessage } from './auth.constant';
@@ -8,7 +8,7 @@ import { LoginUserDto } from './dto/login-user.dto';
 import { JwtService } from '@nestjs/jwt';
 import dayjs from 'dayjs';
 import { USER_EMAIL, COACH_EMAIL, USER_FIRSTNAME, USER_AVATAR, COACH_AVATAR, USER_PASSWORD,
-  USER_DATE_BIRTH, USER_LOCATION, USER_GENDER, USER_SURVEY, COACH_SURVEY } from '../shop-user/mocks/mock-user-data';
+  USER_DATE_BIRTH, USER_LOCATION, USER_GENDER, USER_SURVEY, COACH_SURVEY } from '../user/mocks/mock-user-data';
 import { getRandomElementOfArray } from '../utils/utils';
 
 const USER_ROLE_COACH = 'тренер'
@@ -16,7 +16,7 @@ const USER_ROLE_COACH = 'тренер'
 @Injectable()
 export class AuthService {
   constructor(
-    private readonly shopUserRepository: ShopUserRepository,
+    private readonly userRepository: UserRepository,
     private readonly jwtService: JwtService,
   ) {
     this.DbFillUsers();
@@ -24,7 +24,7 @@ export class AuthService {
 
   async DbFillUsers() {
 
-    const usersArray = await this.shopUserRepository.findByDefault();
+    const usersArray = await this.userRepository.findByDefault();
 
     if(usersArray.length === 0) {
       for(let i = 0; i < 3; i++) {
@@ -47,17 +47,17 @@ export class AuthService {
           }
         }
 
-        const existUser = await this.shopUserRepository
+        const existUser = await this.userRepository
           .findByEmail(user.email);
 
         if (existUser) {
           throw new HttpException(AuthUserMessage.AUTH_USER_EXISTS, HttpStatus.CONFLICT);
         }
 
-        const userEntity = await new ShopUserEntity(user)
+        const userEntity = await new UserEntity(user)
           .setPassword(USER_PASSWORD);
 
-        await this.shopUserRepository
+        await this.userRepository
           .create(userEntity);
 
       }
@@ -84,17 +84,17 @@ export class AuthService {
       }
     }
 
-    const existUser = await this.shopUserRepository
+    const existUser = await this.userRepository
       .findByEmail(user.email);
 
     if (existUser) {
       throw new HttpException(AuthUserMessage.AUTH_USER_EXISTS, HttpStatus.CONFLICT);
     }
 
-    const userEntity = await new ShopUserEntity(user)
+    const userEntity = await new UserEntity(user)
       .setPassword(USER_PASSWORD);
 
-    const createdUser = await this.shopUserRepository
+    const createdUser = await this.userRepository
       .create(userEntity);
 
     return createdUser;
@@ -111,17 +111,17 @@ export class AuthService {
       userBalance: {training: '', availableTrainingsAmount: 0, seasonTicket: '', availableSeasonTicketsAmount: 0}
     };
 
-    const existUser = await this.shopUserRepository
+    const existUser = await this.userRepository
       .findByEmail(email);
 
     if (existUser) {
       throw new HttpException(AuthUserMessage.AUTH_USER_EXISTS, HttpStatus.CONFLICT);
     }
 
-    const userEntity = await new ShopUserEntity(shopUser)
+    const userEntity = await new UserEntity(shopUser)
       .setPassword(password);
 
-    const createdUser = await this.shopUserRepository
+    const createdUser = await this.userRepository
       .create(userEntity);
 
       return createdUser;
@@ -129,18 +129,18 @@ export class AuthService {
 
   async verifyUser(dto: LoginUserDto) {
     const {email, password} = dto;
-    const existUser = await this.shopUserRepository.findByEmail(email);
+    const existUser = await this.userRepository.findByEmail(email);
 
     if (!existUser) {
       throw new UnauthorizedException(AuthUserMessage.AUTH_USER_NOT_FOUND);
     }
 
-    const shopUserEntity = new ShopUserEntity(existUser);
-    if (! await shopUserEntity.comparePassword(password)) {
+    const userEntity = new UserEntity(existUser);
+    if (! await userEntity.comparePassword(password)) {
       throw new UnauthorizedException(AuthUserMessage.AUTH_USER_PASSWORD_WRONG);
     }
 
-    return shopUserEntity.toObject();
+    return userEntity.toObject();
   }
 
   async loginUser(user: User) {

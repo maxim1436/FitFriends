@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { CommentController } from '../comment.controller';
 import { CommentService } from '../comment.service';
-import { userStub } from '../../shop-user/test/stubs/shop-user.stub';
+import { userStub } from '../../user/test/stubs/user.stub';
 import { CreateCommentDto } from '../dto/create-comment.dto';
 import { Comment } from '@fit-friends-backend/shared-types';
 

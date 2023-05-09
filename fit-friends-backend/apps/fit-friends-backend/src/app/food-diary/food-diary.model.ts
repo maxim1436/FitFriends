@@ -2,7 +2,7 @@ import { Document } from 'mongoose';
 import { FoodDiary, TypeOfEating } from '@fit-friends-backend/shared-types';
 import { Schema, SchemaFactory, Prop } from '@nestjs/mongoose';
 import * as mongoose from 'mongoose';
-import { ShopUserModel } from '../shop-user/shop-user.model';
+import { UserModel } from '../user/user.model';
 
 @Schema({
   collection: 'food-diaries',
@@ -27,10 +27,10 @@ export class FoodDiaryModel extends Document implements FoodDiary {
   public typeOfEating: TypeOfEating;
 
   @Prop({
-    type: mongoose.Schema.Types.ObjectId, ref: 'ShopUserModel',
+    type: mongoose.Schema.Types.ObjectId, ref: 'UserModel',
     required: true,
   })
-  public userId: ShopUserModel;
+  public userId: UserModel;
 
 }
 

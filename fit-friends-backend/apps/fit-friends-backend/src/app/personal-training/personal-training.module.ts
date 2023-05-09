@@ -9,7 +9,7 @@ import { ConfigModule } from '@nestjs/config';
 import { ConfigService } from '@nestjs/config';
 import { getJwtConfig } from '../../config/jwt.config';
 import { JwtStrategy } from '../auth/strategies/jwt.strategy';
-import { ShopUserModule } from '../shop-user/shop-user.module';
+import { UserModule } from '../user/user.module';
 import { PersonalTrainingController } from './personal-training.controller';
 
 
@@ -19,7 +19,7 @@ import { PersonalTrainingController } from './personal-training.controller';
       { name: PersonalTrainingModel.name, schema: PersonalTrainingSchema }
     ]),
     PersonalTrainingModule,
-    ShopUserModule,
+    UserModule,
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],

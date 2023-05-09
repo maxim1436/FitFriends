@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { FoodDiaryService } from '../food-diary.service';
 import { FoodDiaryController } from '../food-diary.controller';
-import { userStub } from '../../shop-user/test/stubs/shop-user.stub';
+import { userStub } from '../../user/test/stubs/user.stub';
 import { FoodDiary } from '@fit-friends-backend/shared-types';
 import { CreateFoodDiaryDto } from '../dto/create-food-diary.dto';
 import { UpdateFoodDiaryDto } from '../dto/update-food-diary.dto';

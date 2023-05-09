@@ -1,7 +1,7 @@
 import { Test } from '@nestjs/testing';
 import { TrainingDiaryService } from '../training-diary.service';
 import { TrainingDiaryController } from '../training-diary.controller';
-import { userStub } from '../../shop-user/test/stubs/shop-user.stub';
+import { userStub } from '../../user/test/stubs/user.stub';
 import { TrainingDiary } from '@fit-friends-backend/shared-types';
 import { CreateTrainingDiaryDto } from '../dto/create-training-diary.dto';
 import { UpdateTrainingDiaryDto } from '../dto/update-training-diary.dto';

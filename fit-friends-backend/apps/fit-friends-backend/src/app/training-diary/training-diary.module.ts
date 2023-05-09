@@ -9,8 +9,8 @@ import { ConfigModule } from '@nestjs/config';
 import { ConfigService } from '@nestjs/config';
 import { getJwtConfig } from '../../config/jwt.config';
 import { JwtStrategy } from '../auth/strategies/jwt.strategy';
-import { ShopUserModule } from '../shop-user/shop-user.module';
-import { CRUDOrderModule } from '../shop-order/crud-order.module';
+import { UserModule } from '../user/user.module';
+import { CRUDOrderModule } from '../order/crud-order.module';
 import { TrainingDiaryController } from './training-diary.controller';
 
 
@@ -20,7 +20,7 @@ import { TrainingDiaryController } from './training-diary.controller';
       { name: TrainingDiaryModel.name, schema: TrainingDiarySchema }
     ]),
     TrainingDiaryModule,
-    ShopUserModule,
+    UserModule,
     CRUDOrderModule,
     PassportModule,
     JwtModule.registerAsync({

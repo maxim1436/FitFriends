@@ -8,19 +8,19 @@ import { PersonalTrainingEntity } from './personal-training.entity';
 import { CreatePersonalTrainingDto } from './dto/create-personal-training.dto';
 import { PersonalTrainingMessage } from './personal-training.constant';
 import { UpdatePersonalTrainingDto } from './dto/update-personal-training.dto';
-import { ShopUserService } from '../shop-user/shop-user.service';
+import { UserService } from '../user/user.service';
 import dayjs from 'dayjs';
 
 @Injectable()
 export class PersonalTrainingService {
   constructor(
     private readonly PersonalTrainingRepository: PersonalTrainingRepository,
-    private readonly ShopUserService: ShopUserService,
+    private readonly UserService: UserService,
   ) {}
 
   async create(dto: CreatePersonalTrainingDto, coachEmail: string) {
 
-    const existUser = await this.ShopUserService.findByEmail(coachEmail);
+    const existUser = await this.UserService.findByEmail(coachEmail);
 
     if (!existUser) {
       throw new HttpException(PersonalTrainingMessage.USER_NOT_FOUND, HttpStatus.CONFLICT);
@@ -48,7 +48,7 @@ export class PersonalTrainingService {
 
   async update(trainingId: string, dto: UpdatePersonalTrainingDto, userEmail: string) {
 
-    const existUser = await this.ShopUserService.findByEmail(userEmail);
+    const existUser = await this.UserService.findByEmail(userEmail);
 
     const existTraining = await this.PersonalTrainingRepository.findById(trainingId);
 
@@ -66,13 +66,13 @@ export class PersonalTrainingService {
 
     } else {
 
-      const shopTrainingEntity = Object.assign(
+      const personalTrainingEntity = Object.assign(
         new PersonalTrainingEntity(existTraining),
        {
         status: dto.status, changingStatusDate: dayjs(new Date()).toDate()
        }
       );
-      return this.PersonalTrainingRepository.update(trainingId, shopTrainingEntity);
+      return this.PersonalTrainingRepository.update(trainingId, personalTrainingEntity);
 
     }
 

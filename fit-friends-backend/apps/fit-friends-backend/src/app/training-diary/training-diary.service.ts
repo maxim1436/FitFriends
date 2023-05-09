@@ -1,6 +1,6 @@
 import { fillObject } from '@fit-friends-backend/core';
 import  { TrainingDiaryRdo } from './rdo/training-diary.rdo'
-import { UserOrderRdo } from '../shop-order/rdo/user-order.rdo';
+import { UserOrderRdo } from '../order/rdo/user-order.rdo';
 import { UserRdo } from '../auth/rdo/user.rdo';
 import { UserRole } from '@fit-friends-backend/shared-types';
 import { Injectable, HttpException, HttpStatus} from '@nestjs/common';
@@ -8,8 +8,8 @@ import { TrainingDiaryRepository } from './training-diary.repository';
 import { TrainingDiaryEntity } from './training-diary.entity';
 import { CreateTrainingDiaryDto } from './dto/create-training-diary.dto';
 import { TrainingDiaryMessage } from './training-diary.constant';
-import { ShopUserService } from '../shop-user/shop-user.service';
-import { ShopOrderService } from '../shop-order/shop-order.service';
+import { UserService } from '../user/user.service';
+import { OrderService } from '../order/order.service';
 import dayjs from 'dayjs';
 import { UpdateTrainingDiaryDto } from './dto/update-training-diary.dto';
 
@@ -17,13 +17,13 @@ import { UpdateTrainingDiaryDto } from './dto/update-training-diary.dto';
 export class TrainingDiaryService {
   constructor(
     private readonly trainingDiaryRepository: TrainingDiaryRepository,
-    private readonly ShopUserService: ShopUserService,
-    private readonly shopOrderService: ShopOrderService,
+    private readonly UserService: UserService,
+    private readonly orderService: OrderService,
   ) {}
 
   async create(dto: CreateTrainingDiaryDto, userEmail: string, orderId: string) {
 
-    const existUser = await this.ShopUserService.findByEmail(userEmail);
+    const existUser = await this.UserService.findByEmail(userEmail);
 
     if (!existUser) {
       throw new HttpException(TrainingDiaryMessage.USER_NOT_FOUND, HttpStatus.CONFLICT);
@@ -33,7 +33,7 @@ export class TrainingDiaryService {
       throw new HttpException(TrainingDiaryMessage.USER_ROLE_WRONG, HttpStatus.CONFLICT);
     }
 
-    const existOrder = await this.shopOrderService.getOrder(orderId);
+    const existOrder = await this.orderService.getOrder(orderId);
     const existOrderRdo = fillObject(UserOrderRdo, existOrder);
 
     if (!existOrder) {
@@ -63,7 +63,7 @@ export class TrainingDiaryService {
 
   async update(trainingDiaryId: string, dto: UpdateTrainingDiaryDto, userEmail: string) {
 
-    const existUser = await this.ShopUserService.findByEmail(userEmail);
+    const existUser = await this.UserService.findByEmail(userEmail);
 
     if (existUser.userRole === UserRole.Coach) {
       throw new HttpException(TrainingDiaryMessage.USER_ROLE_WRONG, HttpStatus.CONFLICT);
@@ -86,7 +86,7 @@ export class TrainingDiaryService {
 
   async getTrainingDiary(id: string, userEmail: string) {
 
-    const existUser = await this.ShopUserService.findByEmail(userEmail);
+    const existUser = await this.UserService.findByEmail(userEmail);
 
     if (existUser.userRole === UserRole.Coach) {
       throw new HttpException(TrainingDiaryMessage.USER_ROLE_WRONG, HttpStatus.CONFLICT);
@@ -107,7 +107,7 @@ export class TrainingDiaryService {
 
   async deleteTrainingDiary(id: string, userEmail: string) {
 
-    const existUser = await this.ShopUserService.findByEmail(userEmail);
+    const existUser = await this.UserService.findByEmail(userEmail);
 
     if (existUser.userRole === UserRole.Coach) {
       throw new HttpException(TrainingDiaryMessage.USER_ROLE_WRONG, HttpStatus.CONFLICT);

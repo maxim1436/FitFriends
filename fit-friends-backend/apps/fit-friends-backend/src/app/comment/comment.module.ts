@@ -9,8 +9,8 @@ import { ConfigModule } from '@nestjs/config';
 import { ConfigService } from '@nestjs/config';
 import { getJwtConfig } from '../../config/jwt.config';
 import { JwtStrategy } from '../auth/strategies/jwt.strategy';
-import { ShopUserModule } from '../shop-user/shop-user.module';
-import { CRUDTrainingModule } from '../shop-training/crud-training.module';
+import { UserModule } from '../user/user.module';
+import { CRUDTrainingModule } from '../training/crud-training.module';
 import { CommentController } from './comment.controller';
 
 @Module({
@@ -20,7 +20,7 @@ import { CommentController } from './comment.controller';
     ]),
     CommentModule,
     CRUDTrainingModule,
-    ShopUserModule,
+    UserModule,
     PassportModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],

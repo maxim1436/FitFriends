@@ -14,8 +14,8 @@ export class PersonalTrainingRepository implements CRUDRepository<PersonalTraini
   }
 
   public async create(item: PersonalTrainingEntity): Promise<PersonalTraining> {
-    const newShopTraining = new this.personalTrainingModel(item);
-    return (await newShopTraining.save()).populate(['initiator', 'companion']);
+    const newPersonalTraining = new this.personalTrainingModel(item);
+    return (await newPersonalTraining.save()).populate(['initiator', 'companion']);
   }
 
   public async findById(id: string): Promise<PersonalTraining> {
