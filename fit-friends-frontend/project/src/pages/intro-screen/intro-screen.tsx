@@ -1,27 +1,15 @@
-
+import StyleSettings from '../../components/style-settings/style-settings';
+import LinkSettings from '../../components/link-settings/link-settings';
 
 function IntroScreen (): JSX.Element {
   return (
     <div>
       <head>
         <title>Разводящая — FitFriends</title>
-        <meta charSet="utf-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <meta httpEquiv="X-UA-Compatible" content="ie=edge"/>
-        <meta name="description" content="ProjectName — описание"/>
-        <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png"/>
-        <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png"/>
-        <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png"/>
-        <link rel="manifest" href="favicon/site.webmanifest" crossOrigin="use-credentials"/>
-        <link rel="mask-icon" href="favicon/safari-pinned-tab.svg" color="#5bbad5"/>
-        <meta name="msapplication-TileColor" content="#da532c"/>
-        <meta name="theme-color" content="#ffffff"/>
-        <link rel="preload" href="fonts/roboto-regular.woff2" as="font" crossOrigin="anonymous"/>
-        <link rel="preload" href="fonts/roboto-medium.woff2" as="font" crossOrigin="anonymous"/>
-        <link rel="preload" href="fonts/roboto-bold.woff2" as="font" crossOrigin="anonymous"/>
-        <link rel="stylesheet" href="css/style.min.css"/>
+        <LinkSettings/>
       </head>
       <body>
+        <StyleSettings/>
         <div className="wrapper">
           <main>
             <div className="intro">
@@ -41,7 +29,7 @@ function IntroScreen (): JSX.Element {
                 </div>
                 <div className="intro__buttons">
                   <button className="btn intro__button" type="button">Регистрация</button>
-                  <p className="intro__text">Есть аккаунт? <a className="intro__link" href="#">Вход</a></p>
+                  <p className="intro__text">Есть аккаунт? <a className="intro__link" href="/#">Вход</a></p>
                 </div>
               </div>
             </div>
