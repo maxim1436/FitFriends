@@ -1,10 +1,15 @@
 Запуск проекта:
+    Backend:
 1. Переходим в директорию fit-friends-backend
 2. Выполняем npm install
 3. Выполняем ряд команд для настройки докера: cd apps -> cd users -> docker-compose up -d
 4. Поднимаемся в директорию fit-friends-backend
 5. Выполняем команду nx run fit-friends-backend:serve
 6. Получаем подтверждение в консоли, проект запущен.
+    Frontend:
+1. Переходим в директорию fit-friends-frontend/project
+2. Выполняем npm install
+3. Выполняем npm start
 
 Тестирование http запросов:
 1. Переходим в директорию users (см. 3 пункт "Запуск прокта"), затем src -> app
@@ -25,3 +30,4 @@
 
 Маршрут OpenApi: http://localhost:3333/spec
 Маршрут FakeSmtp-сервера: http://localhost:1083
+Маршрут Frontend: http://localhost:3000
